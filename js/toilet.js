@@ -40,21 +40,8 @@ checkAvailability();*/
 
 //********************4.의견남기기 클릭시 추가
 function goComment(seq) {
-   $("#"+divId).toggle();
-   $.mobile.changePage("#commentWrt", { data : { SEQ : seq } });
+    location.href = "#commentWrt"
 }
-
-//***********5.index.html에 추가   => 테스트
-/*<div id="commentWrt" data-role="page> 
-<form id="commentForm">
-     <label for="userName">이름</label>
-     <input name="userName" id="userName" type="text" value="">
-    <label for="userName">내용</label>
-     <input name="userName" id="userName" type="text" value="">
-</form>
-
-</div>*/
-
 
 //index.html에서 onclick="gpsMapToilet"하면 js에서 가장 먼저 function gpsMapToilet() 함수 발생
 // ==> 그 후 $(document).on('pagebeforeshow', '#toilet', function (){  처리     
@@ -173,47 +160,47 @@ $(document).on('pageshow', '#toilet', function (){
                       }
  
                      //************************** 3.선택된 데이터의 seq를 가지고, 넘길 페이지 아이디를 가지고 페이지 넘기기
-                      contentString8= '<br/><a href="javascript:goComment('+ data[i].seq + ');">의견남기기</a>'      //여기에 의견 텍스트입력하도록 해도되지만 의견남기기 클릭하면 다음페이지로 넘어가서 등록하도록 할거임
+                      contentString8= '<br/><a href="#" onclick="goComment(\''+ data[i].seq + '\');" >의견남기기</a>';      //여기에 의견 텍스트입력하도록 해도되지만 의견남기기 클릭하면 다음페이지로 넘어가서 등록하도록 할거임
                       contentString1 = contentString1 + contentString8;
 
                       var loc={position : new google.maps.LatLng(parseFloat(data[i].lat), parseFloat(data[i].lng)), type:'dataLocation', content : contentString1 }; //lat "23.wqe" => ""를 없애야됨
                       locations.push(loc);
-                }
+                    }
             
-                //가장 가까운 화장실 정보창으로 보여주기(위경도가 같을 경우 정보창을 닫고 열면 그 다음 화장실이 나옴)
-                var marker = new google.maps.Marker({
-                      position: locations[1].position,
-                      icon: 'http://localhost:8000/img/mapIcon.png',
-                      map: map
-                });
+                    //가장 가까운 화장실 정보창으로 보여주기(위경도가 같을 경우 정보창을 닫고 열면 그 다음 화장실이 나옴)
+                    var marker = new google.maps.Marker({
+                          position: locations[1].position,
+                          icon: 'http://localhost:8000/img/mapIcon.png',
+                          map: map
+                    });
 
-                var infowindow = new google.maps.InfoWindow({
-                      content: locations[1].content
-                });
+                    var infowindow = new google.maps.InfoWindow({
+                          content: locations[1].content
+                    });
 
-                infowindow.open(map, marker);
+                    infowindow.open(map, marker);
           
-                // Create markers.
-                locations.forEach(function(feature) {
+                    // Create markers.
+                    locations.forEach(function(feature) {
             
-                    var markers="";   //*****************************변경함 1.확인하기
-                    var infowindow="";
+                      var markers="";   //*****************************변경함 1.확인하기
+                      var infowindow="";
 
-                    markers = new google.maps.Marker({
-                      position: feature.position,
-                      icon: icons[feature.type].icon,
-                      map: map
-                    });
+                      markers = new google.maps.Marker({
+                        position: feature.position,
+                        icon: icons[feature.type].icon,
+                        map: map
+                      });
 
-                    infowindow = new google.maps.InfoWindow({
-                      content: feature.content
-                    });
+                      infowindow = new google.maps.InfoWindow({
+                        content: feature.content
+                      });
 
-                    markers.addListener('click', function() {
-                      infowindow.open(map, markers);
-                    }); 
+                      markers.addListener('click', function() {
+                        infowindow.open(map, markers);
+                      }); 
                 
-                 });
+                    });
 
               },
               error:function(request,status,error){
@@ -236,3 +223,30 @@ $(document).on('pageshow', '#toilet', function (){
 
 
 });
+
+/*
+function goCmtRegist{
+
+      $.ajax({
+
+          url : "http://localhost:8080/toilet",
+          type : 'GET',
+          async: true,
+          data : pos,     //현재위치 
+          crossdomain:true,
+          dataType : "json",
+          timeout: 600000, 
+          success : function(data){
+            alert("success")
+
+          },
+          error:function(request,status,error){
+              alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+          },
+          fail : function() {
+            alert("인터넷 연결 상태를 확인해주세요.");
+                  $('.wrap-loading').addClass('display-none');
+          }      
+      });
+
+}*/

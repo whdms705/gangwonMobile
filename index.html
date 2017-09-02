@@ -10,13 +10,6 @@
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
-        <!-- 다음지도 api -->
-        <!-- <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=47794a9ce1fe90db471e9d939edcc21e"></script>  -->
-        <!-gps 정보 플러그인 -->
- <!--        <script type="text/javascript" src="js/cordova/andorid/diagnostic.js"></script>  
-        <script type="text/javascript" src="js/cordova/ios/diagnostic.js"></script>  
-        <script type="text/javascript" src="js/cordova/windows/diagnostic.js"></script>  --> 
         <!--구글맵api -->
         <!--async 특성은 API가 로드되는 중에 브라우저가 나머지 페이지의 렌더링을 계속하도록 합니다. -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
@@ -87,16 +80,7 @@
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="map" style="width:100%;min-height:500px;"></div>
-                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
-                <!-- <div id="menu_wrap" class="bg_white" style="border:1px solid black;">
-                    <div class="option">
-                        <div>
-                        </div>
-                    </div>ㅊ
-                    <hr>
-                    <ul id="placesList"></ul>
-                    <div id="pagination"></div>
-                </div> -->
+                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실이 정보창으로 뜸</button>
             </div>
         </div>
         <!--<div data-role="footer">
@@ -110,9 +94,6 @@
             <h1>의견 남기기</h1>
         </div>
         <div data-role="content" class="ui-content" style="padding:0">
-           <!--  <img id="cpImage" src="img/current.png" /> -->
-            <img id="cpImage"/>
-
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="comment" >
                    <form id="commentForm">
@@ -120,9 +101,10 @@
                         <input name="userName" id="userName" type="text" value="">
                         <label for="userName">내용</label>
                         <input name="userName" id="userName" type="text" value="">
+                        <button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist()" style="height:40px;">등록</button>
                     </form>  
-
                 </div>
+
         </div>
     </div>
 

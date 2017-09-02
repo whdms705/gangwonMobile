@@ -1,49 +1,390 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<head>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+        <title>강원도</title>
+        <link rel="stylesheet" href="lib/jquery-mobile/css/jquery.mobile-1.4.0.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
+        <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
+        async defer></script>
+        <!--구글 맵 마커클러스터-->
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+        </script>
+        
+        <script type="text/javascript" src="cordova.js"></script>   
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/toilet.js"></script>
+        <script type="text/javascript" src="js/festival.js"></script>
+
+
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME LAYOUT STYLES -->
+
+
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+
+    <!-- 메인 -->
+    <div data-role="page" id="home" class="mypage">
+            <div data-role="header" style="padding:.3em 0;">
+                <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><!-- <img id="icon1" src="img/icon1.png"/> --> 강원도</h1>
+            </div>
+            <div data-role="content" class="content" style="padding:1em 0;">
+                <div class="main_content" style="text-align:center;">
+                    <div>
+                       <a id="kakao-login-btn"></a>
+                        <a href="http://developers.kakao.com/logout"></a>
+                    </div>
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <!-- GPS를 이용한 근처 공중화장실 지도 띄우기 -->
+                        <a href="#toilet" class="ui-btn menubarA">공중화장실</a>
+                    </div>
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
+                    </div>
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
+                        <a href="#parking" onclick="gpsMapParking()" class="ui-btn menubarA">주차장</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
+                        <a href="#login2"  class="ui-btn menubarA">로그인</a>
+                    </div>
+
+                </div>
+            </div>            
+            <div data-role="footer">
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보의 출처는 강원도 공공데이터입니다.</p>
+            </div>            
+    </div>
+
+    <!-- GPS를 이용한 근처 공중화장실/주차장 지도 띄우기 화면-->
+<!--     <div data-role="page" id="toilet" class="mypage" data-prev="home">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>근처 지도</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="content">
+            <div class="main_content" style="text-align:center;">
+                <div>
+                   
+                </div>
             </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+    </div> -->
+    <div data-role="page" id="toilet">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>주변 공중화장실 찾기</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+           <!--  <img id="cpImage" src="img/current.png" /> -->
+            <img id="cpImage"/>
+            <div class="map_wrap">
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="map" style="width:100%;min-height:500px;"></div>
+                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
+                <!-- <div id="menu_wrap" class="bg_white" style="border:1px solid black;">
+                    <div class="option">
+                        <div>
+                        </div>
+                    </div>ㅊ
+                    <hr>
+                    <ul id="placesList"></ul>
+                    <div id="pagination"></div>
+                </div> -->
+            </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+
+        <div data-role="page" id="commentWrt">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>의견 남기기</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+           <!--  <img id="cpImage" src="img/current.png" /> -->
+            <img id="cpImage"/>
+
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="comment" >
+                   <form id="commentForm">
+                        <label for="userName">이름</label>
+                        <input name="userName" id="userName" type="text" value="">
+                        <label for="userName">내용</label>
+                        <input name="userName" id="userName" type="text" value="">
+                    </form>  
+
+                </div>
+        </div>
+    </div>
+
+    <!-- start of festival page -->
+    <div data-role="page" id="festival">
+        <div data-role="header">
+            
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>강원도 축제</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+              <div class="row">
+                            <div class="col-md-12">
+                                <div class="note note-info">
+                                    <h4 class="block">UI Collor Collection</h4>
+                                    <p> Just apply the color class(e.g: <code>.blue-madison</code>) to Metronic portlets, buttons, statistic blocks, tiles and other containers. </p>
+                                </div>
+                                <div class="row" id="festival_content">
+                                    
+
+
+                                </div>
+                                
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of festival page -->
+
+        <!-- start of festivalDetail page -->
+    <div data-role="page" id="festivalDetail">
+        <div data-role="header">
+            
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>강원도 축제 상세정보</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+            <!-- BEGIN THUMBNAILS PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-green-sharp"></i>
+                            <span class="caption-subject font-green-sharp bold uppercase">Thumbnails</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-cloud-upload"></i>
+                            </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-wrench"></i>
+                            </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        
+                        
+                        <h4><p class="block" id="festival_title"></p></h4>
+                        <div class="note note-info">
+                            <p id="festival_summary"> </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="thumbnail">
+                                    <img  id="festival_image" alt="" style="width: 100%; height: 200px;">
+                                    <div class="caption">
+                                        <div id="festival_info">
+                                            
+                                        </div>
+                                        <p>
+                                            <a href="javascript:;" class="btn blue"> 지도보기 </a>
+                                            <a href="javascript:;" class="btn default"> 돌아가기 </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- END THUMBNAILS PORTLET-->
+
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of festivalDetail page -->
+     
+     <!-- start of login page -->
+     <div data-role="page" id="login">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>Login</h1>
+        </div>
+
+        <div data-role="content" class="ui-content" style="padding:0">
+
+        <script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else {
+      // The person is not logged into your app or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    alert("checkLoginState")
+    FB.getLoginStatus(function(response) {
+      console.log("-----------> : "+response);
+      console.log(JSON.stringify(response))
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '292713264416649',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.8' // use graph api version 2.8
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      console.log(response)
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+</script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">sss
+          </fb:login-button>
+
+          <div id="status">
+          </div>
+
+          
+           
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of login page -->
+
+
+    <!-- start of Naver login page -->
+     <div data-role="page" id="login2">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>Login</h1>
+        </div>
+
+        <div data-role="content" class="ui-content" style="padding:0">
+
+       
+
+          
+           
+        </div>
+       
+    </div>
+    <!-- end of Naver login page -->
+
+
     </body>
 </html>

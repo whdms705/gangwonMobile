@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
@@ -12,16 +12,38 @@
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
         <!--구글맵api -->
         <!--async 특성은 API가 로드되는 중에 브라우저가 나머지 페이지의 렌더링을 계속하도록 합니다. -->
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
         async defer></script>
         <!--구글 맵 마커클러스터-->
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
         </script>
         
-        <script type="text/javascript" src="cordova.js"></script>  
+        <script type="text/javascript" src="cordova.js"></script>   
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/toilet.js"></script>
-   </head>
+        <script type="text/javascript" src="js/festival.js"></script>
+
+
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+        <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME LAYOUT STYLES -->
+
+
+    </head>
     <body>
 
     <!-- 메인 -->
@@ -40,11 +62,16 @@
                         <a href="#toilet" class="ui-btn menubarA">공중화장실</a>
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                        <a href="#" onclick="" class="ui-btn menubarA">축제</a>
+                        <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
                         <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
                         <a href="#parking" onclick="gpsMapParking()" class="ui-btn menubarA">주차장</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
+                        <a href="#login2"  class="ui-btn menubarA">로그인</a>
                     </div>
 
                 </div>
@@ -88,7 +115,7 @@
             </div>-->
     </div>
 
-    <div data-role="page" id="commentWrt">
+        <div data-role="page" id="commentWrt">
         <div data-role="header">
             <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
             <h1>의견 남기기</h1>
@@ -107,6 +134,120 @@
 
         </div>
     </div>
+
+    <!-- start of festival page -->
+    <div data-role="page" id="festival">
+        <div data-role="header">
+            
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>강원도 축제</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+              <div class="row">
+                            <div class="col-md-12">
+                                <div class="note note-info">
+                                    <h4 class="block">UI Collor Collection</h4>
+                                    <p> Just apply the color class(e.g: <code>.blue-madison</code>) to Metronic portlets, buttons, statistic blocks, tiles and other containers. </p>
+                                </div>
+                                <div class="row" id="festival_content">
+                                    
+
+
+                                </div>
+                                
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of festival page -->
+
+        <!-- start of festivalDetail page -->
+    <div data-role="page" id="festivalDetail">
+        <div data-role="header">
+            
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>강원도 축제 상세정보</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+            <!-- BEGIN THUMBNAILS PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-green-sharp"></i>
+                            <span class="caption-subject font-green-sharp bold uppercase">Thumbnails</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-cloud-upload"></i>
+                            </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-wrench"></i>
+                            </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        
+                        
+                        <h4><p class="block" id="festival_title"></p></h4>
+                        <div class="note note-info">
+                            <p id="festival_summary"> </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="thumbnail">
+                                    <img  id="festival_image" alt="" style="width: 100%; height: 200px;">
+                                    <div class="caption">
+                                        <div id="festival_info">
+                                            
+                                        </div>
+                                        <p>
+                                            <a href="javascript:;" class="btn blue"> 지도보기 </a>
+                                            <a href="javascript:;" class="btn default"> 돌아가기 </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- END THUMBNAILS PORTLET-->
+
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of festivalDetail page -->
+ 
+
 
     </body>
 </html>

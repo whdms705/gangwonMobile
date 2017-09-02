@@ -10,10 +10,16 @@
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
+        async defer></script>
+        <!--구글 맵 마커클러스터-->
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+        </script>
         
         <script type="text/javascript" src="cordova.js"></script>   
         <script type="text/javascript" src="js/index.js"></script>
-        <!-- <script type="text/javascript" src="js/toilet.js"></script> -->
+        <script type="text/javascript" src="js/toilet.js"></script>
         <script type="text/javascript" src="js/festival.js"></script>
 
 
@@ -51,7 +57,7 @@
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
                         <!-- GPS를 이용한 근처 공중화장실 지도 띄우기 -->
-                        <a href="#toilet" onclick="gpsMapToilet()" class="ui-btn menubarA">공중화장실</a>
+                        <a href="#toilet" class="ui-btn menubarA">공중화장실</a>
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
                         <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
@@ -98,21 +104,8 @@
             <img id="cpImage"/>
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
-                <div id="map" style="width:500px;height:400px;"></div>
-                <script type="text/javascript">
-                
-                    //var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-                    //alert(container)
-                    //var options = { //지도를 생성할 때 필요한 기본 옵션
-                    //    center: new daum.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-                    //    level: 3 //지도의 레벨(확대, 축소 정도)
-                    //};
-
-                    //var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
-                    
-                    
-
-                </script>
+                <div id="map" style="width:100%;min-height:500px;"></div>
+                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
                 <!-- <div id="menu_wrap" class="bg_white" style="border:1px solid black;">
                     <div class="option">
                         <div>
@@ -127,6 +120,28 @@
         <!--<div data-role="footer">
                 <h1>Insert Footer Text Here</h1>
             </div>-->
+    </div>
+
+        <div data-role="page" id="commentWrt">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>의견 남기기</h1>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+           <!--  <img id="cpImage" src="img/current.png" /> -->
+            <img id="cpImage"/>
+
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="comment" >
+                   <form id="commentForm">
+                        <label for="userName">이름</label>
+                        <input name="userName" id="userName" type="text" value="">
+                        <label for="userName">내용</label>
+                        <input name="userName" id="userName" type="text" value="">
+                    </form>  
+
+                </div>
+        </div>
     </div>
 
     <!-- start of festival page -->

@@ -32,7 +32,7 @@ console.log(123)
 	        			image1="/img/noImage.gif";
 	        		}
 	        		var festival_content=content(image1,title,contenttypeid,contentid);
-	        		$("#festival_content").append(festival_content);
+	        		$("#festival_content").append(festival_content);		
 
 
 	        });

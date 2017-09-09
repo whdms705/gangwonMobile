@@ -10,6 +10,8 @@
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
+        <!--구글맵api -->
+        <!--async 특성은 API가 로드되는 중에 브라우저가 나머지 페이지의 렌더링을 계속하도록 합니다. -->
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
         async defer></script>
@@ -142,16 +144,7 @@
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="map" style="width:100%;min-height:500px;"></div>
-                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
-                <!-- <div id="menu_wrap" class="bg_white" style="border:1px solid black;">
-                    <div class="option">
-                        <div>
-                        </div>
-                    </div>ㅊ
-                    <hr>
-                    <ul id="placesList"></ul>
-                    <div id="pagination"></div>
-                </div> -->
+                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실이 정보창으로 뜸</button>
             </div>
         </div>
         <!--<div data-role="footer">
@@ -165,9 +158,6 @@
             <h1>의견 남기기</h1>
         </div>
         <div data-role="content" class="ui-content" style="padding:0">
-           <!--  <img id="cpImage" src="img/current.png" /> -->
-            <img id="cpImage"/>
-
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="comment" >
                    <form id="commentForm">
@@ -175,9 +165,10 @@
                         <input name="userName" id="userName" type="text" value="">
                         <label for="userName">내용</label>
                         <input name="userName" id="userName" type="text" value="">
+                        <button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist()" style="height:40px;">등록</button>
                     </form>  
-
                 </div>
+
         </div>
     </div>
 
@@ -292,135 +283,7 @@
             </div>-->
     </div>
     <!-- end of festivalDetail page -->
-     
-     <!-- start of login page -->
-     <div data-role="page" id="login">
-        <div data-role="header">
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            <h1>Login</h1>
-        </div>
-
-        <div data-role="content" class="ui-content" style="padding:0">
-
-        <script>
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-    } else {
-      // The person is not logged into your app or we are unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    }
-  }
-
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    alert("checkLoginState")
-    FB.getLoginStatus(function(response) {
-      console.log("-----------> : "+response);
-      console.log(JSON.stringify(response))
-      statusChangeCallback(response);
-    });
-  }
-
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '292713264416649',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.8' // use graph api version 2.8
-  });
-
-  // Now that we've initialized the JavaScript SDK, we call 
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
-
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-
-  };
-
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      console.log(response)
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
-</script>
-
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-
-          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">sss
-          </fb:login-button>
-
-          <div id="status">
-          </div>
-
-          
-           
-        </div>
-        <!--<div data-role="footer">
-                <h1>Insert Footer Text Here</h1>
-            </div>-->
-    </div>
-    <!-- end of login page -->
-
-
-    <!-- start of Naver login page -->
-     <div data-role="page" id="login2">
-        <div data-role="header">
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            <h1>Login</h1>
-        </div>
-
-        <div data-role="content" class="ui-content" style="padding:0">
-
-       
-
-          
-           
-        </div>
-       
-    </div>
-    <!-- end of Naver login page -->
+ 
 
 
     </body>

@@ -75,7 +75,7 @@ $(document).on('pageshow', '#toilet', function (){
 
         //-- test --
           $.ajax({
-              url : "http://localhost:8080/toilet",
+              url : "http://13.114.79.230:8080/gangwon/toilet",
               type : 'GET',
               async: true,
               data : pos,     //현재위치 

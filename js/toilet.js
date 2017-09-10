@@ -41,6 +41,17 @@ checkAvailability();*/
 
 var urlpath = 'http://13.114.79.230:8080/gangwon';
 
+var iconBase = urlpath +'/img/';
+var icons = {
+  myGpsLocation: {
+    icon: iconBase + 'gpsIcon.png'
+  },
+  dataLocation: {
+    icon: iconBase + 'mapIcon.png'
+  }
+};
+
+
 //댓글 클릭시 리스트 
 function goComment(seq, regYn) {
     var regYn;             //등록 여부 => 등록 후 해당 함수 부를때 댓글이 없습니다 보이지 않게 하기 위함
@@ -122,6 +133,14 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
             lng: position.coords.longitude
 
         };
+/*
+        var map;
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15 , //1이면 전세계 (기존 15)
+            center: new google.maps.LatLng(37.8174296, 127.7115919),
+            mapTypeId: 'roadmap'
+        });*/
 
         //-- test --
           $.ajax({
@@ -133,15 +152,15 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
               dataType : "json",
               timeout: 600000, 
               success : function(data){
-                var map;
+var map;
 
-                map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 15 , //1이면 전세계 (기존 15)
-                  center: new google.maps.LatLng(37.8174296, 127.7115919),
-                  mapTypeId: 'roadmap'
-                });
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15 , //1이면 전세계 (기존 15)
+            center: new google.maps.LatLng(37.8174296, 127.7115919),
+            mapTypeId: 'roadmap'
+        });
 
-                var iconBase = urlpath +'/img/';
+/*                var iconBase = urlpath +'/img/';
                 var icons = {
                   myGpsLocation: {
                     icon: iconBase + 'gpsIcon.png'
@@ -150,7 +169,7 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
                     icon: iconBase + 'mapIcon.png'
                   }
                 };
-
+*/
                var contentString1 = [];
                var contentString1 = '<div id="toiletContent">현재 위치</div>'
 
@@ -312,6 +331,7 @@ function nearToiletSearch(){
 
         };
 
+
         //-- test --
           $.ajax({
               url : urlpath +"/toilet",
@@ -330,7 +350,7 @@ function nearToiletSearch(){
                   mapTypeId: 'roadmap'
                 });
 
-                var iconBase = urlpath +'/img/';
+/*                var iconBase = urlpath +'/img/';
                 var icons = {
                   myGpsLocation: {
                     icon: iconBase + 'gpsIcon.png'
@@ -338,7 +358,7 @@ function nearToiletSearch(){
                   dataLocation: {
                     icon: iconBase + 'mapIcon.png'
                   }
-                };
+                };*/
 
                var contentString1 = [];
                var contentString1 = '<div id="toiletContent">현재 위치</div>'

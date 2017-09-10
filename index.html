@@ -12,7 +12,6 @@
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
         <!--구글맵api -->
         <!--async 특성은 API가 로드되는 중에 브라우저가 나머지 페이지의 렌더링을 계속하도록 합니다. -->
-
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
         async defer></script>
         <!--구글 맵 마커클러스터-->
@@ -21,7 +20,9 @@
         
         <script type="text/javascript" src="cordova.js"></script>   
         <script type="text/javascript" src="js/index.js"></script>
+<!--         <script type="text/javascript" src="js/gpsLocation.js"></script> -->
         <script type="text/javascript" src="js/toilet.js"></script>
+        <script type="text/javascript" src="js/parking.js"></script>
         <script type="text/javascript" src="js/festival.js"></script>
 
 
@@ -43,8 +44,6 @@
         <!-- END THEME LAYOUT STYLES -->
 
 
-
-
     </head>
     <body>
 
@@ -53,41 +52,6 @@
             <div data-role="header" style="padding:.3em 0;">
                 <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><!-- <img id="icon1" src="img/icon1.png"/> --> 강원도</h1>
             </div>
-        <!-- BEGIN QUICK NAV -->
-        <nav class="quick-nav">
-            <a class="quick-nav-trigger" href="#0">
-                <span aria-hidden="true"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">
-                        <span>Purchase Metronic</span>
-                        <i class="icon-basket"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">
-                        <span>Customer Reviews</span>
-                        <i class="icon-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/showcast/" target="_blank">
-                        <span>Showcase</span>
-                        <i class="icon-user"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">
-                        <span>Changelog</span>
-                        <i class="icon-graph"></i>
-                    </a>
-                </li>
-            </ul>
-            <span aria-hidden="true" class="quick-nav-bg"></span>
-        </nav>
-        <div class="quick-nav-overlay"></div>
-        <!-- END QUICK NAV -->
             <div data-role="content" class="content" style="padding:1em 0;">
                 <div class="main_content" style="text-align:center;">
                     <div>
@@ -96,14 +60,14 @@
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
                         <!-- GPS를 이용한 근처 공중화장실 지도 띄우기 -->
-                        <a href="#toilet" class="ui-btn menubarA">공중화장실</a>
+                        <a href="#toilet" class="ui-btn menubarA" onclick="toiletInfo()">공중화장실</a>
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
                         <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
                     </div>
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
                         <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
-                        <a href="#parking" onclick="gpsMapParking()" class="ui-btn menubarA">주차장</a>
+                        <a href="#parking" class="ui-btn menubarA" onclick="parkingInfo()">주차장</a>
                     </div>
 
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
@@ -133,42 +97,76 @@
             </div>
         </div>
     </div> -->
+
+    <!-- 공중화장실 -->
     <div data-role="page" id="toilet">
         <div data-role="header">
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
             <h1>주변 공중화장실 찾기</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
         <div data-role="content" class="ui-content" style="padding:0">
-           <!--  <img id="cpImage" src="img/current.png" /> -->
-            <img id="cpImage"/>
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="map" style="width:100%;min-height:500px;"></div>
-                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실이 정보창으로 뜸</button>
+                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
             </div>
         </div>
-        <!--<div data-role="footer">
-                <h1>Insert Footer Text Here</h1>
-            </div>-->
     </div>
 
-        <div data-role="page" id="commentWrt">
+    <div data-role="page" id="commentWrt">
         <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>댓글</h1>
             <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            <h1>의견 남기기</h1>
+        </div>
+        <div data-role="content" id="cmtContent" class="ui-content" style="padding:0">
+            <img id="cpImage"/>
+            <form id="commentForm">    
+                <div id="commentList">
+
+                </div>
+                <div id="commentRegist" >
+                
+                </div>  
+                <input name="seq" id="seq" type="hidden" value="">
+            </form>  
+        </div>
+    </div>
+
+    <!-- 주차장 -->
+    <div data-role="page" id="parking">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>주변 주차장 찾기</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
         <div data-role="content" class="ui-content" style="padding:0">
+            <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
-                <div id="comment" >
-                   <form id="commentForm">
-                        <label for="userName">이름</label>
-                        <input name="userName" id="userName" type="text" value="">
-                        <label for="userName">내용</label>
-                        <input name="userName" id="userName" type="text" value="">
-                        <button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist()" style="height:40px;">등록</button>
-                    </form>  
-                </div>
+                <div id="parkingmap" style="width:100%;min-height:500px;"></div>
+                <button class="ui-btn" id="nearToilet" onclick="nearParkingSearch()" style="height:30px;">가장 가까운 주차장 찾기</button>
+            </div>
+        </div>
+    </div>
 
+    <div data-role="page" id="parkingCommentWrt">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>댓글</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+        </div>
+        <div data-role="content" id="parkingCmtContent" class="ui-content" style="padding:0">
+            <img id="cpImage"/>
+            <form id="parkingCommentForm">    
+                <div id="parkingCommentList">
+
+                </div>
+                <div id="parkingCommentRegist" >
+                
+                </div>  
+                <input name="seq" id="seq" type="hidden" value="">
+            </form>  
         </div>
     </div>
 

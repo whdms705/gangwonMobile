@@ -32,6 +32,7 @@ console.log(123)
 	        			image1="/img/noImage.gif";
 	        		}
 	        		var festival_content=content(image1,title,contenttypeid,contentid);
+	        		console.log(festival_content)
 	        		$("#festival_content").append(festival_content);		
 
 
@@ -66,6 +67,7 @@ function content(image1,title,contenttypeid,contentid){
 	           +'</div>'
 	           +'<div class="color-info bg-white c-font-14 sbold">'
 	           + title
+	           +'</div>'
 	           +'</div>'
 	           +'</div>';
 

@@ -10,8 +10,8 @@
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
- 
-        <script type="text/javascript" src="js/gpsLocation.js"></script>
+ <!-- 
+        <script type="text/javascript" src="js/gpsLocation.js"></script> -->
         <!--구글맵api -->
         <!--async 특성은 API가 로드되는 중에 브라우저가 나머지 페이지의 렌더링을 계속하도록 합니다. -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
@@ -137,6 +137,11 @@
                 <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
             </div>
         </div>
+        <!-- start 로딩 이미지   -->
+        <div class="wrap-loading" style="">
+            <div id="tLoading"> <img src="img/loader.gif" /></div>
+        </div>
+        <!-- end 로딩 이미지   -->
     </div>
 
     <div data-role="page" id="commentWrt">
@@ -145,9 +150,8 @@
             <h1>댓글</h1>
             <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
-        <div data-role="content" id="cmtContent" class="ui-content" style="padding:0">
-            <img id="cpImage"/>
-            <form id="commentForm">    
+        <div data-ajax="false" data-role="content" id="cmtContent" class="ui-content" style="padding:0">
+            <form id="commentForm" action="#" method="post" >    
                 <div id="commentList">
 
                 </div>
@@ -167,12 +171,17 @@
             <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
         <div data-role="content" class="ui-content" style="padding:0">
+            <!-- start 로딩 이미지   -->
+             <div class="p_wrap-loading" style="">
+                <div id="pLoading"> <img src="img/loader.gif"/></div>
+            </div>
+            <!-- end 로딩 이미지   -->   
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="parkingmap" style="width:100%;min-height:500px;"></div>
                 <button class="ui-btn" id="nearToilet" onclick="nearParkingSearch()" style="height:30px;">가장 가까운 주차장 찾기</button>
             </div>
-        </div>
+        </div>     
     </div>
 
     <div data-role="page" id="parkingCommentWrt">
@@ -182,8 +191,7 @@
             <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
         <div data-role="content" id="parkingCmtContent" class="ui-content" style="padding:0">
-            <img id="cpImage"/>
-            <form id="parkingCommentForm">    
+            <form id="parkingCommentForm" action="#" method="post" >    
                 <div id="parkingCommentList">
 
                 </div>
@@ -308,25 +316,4 @@
     <!-- end of festivalDetail page -->
 
     </body>
-<!--     <script type="text/javascript">
-    window.onload = function () {
-     checkAvailability();
-     var lng =$("#lng").val();
-     var lat =$("#lat").val();
-
-    $('#toilet').attr('onclick', '');
-
-  
-    $('#toilet').unbind('click');
-
-    $('#toilet').bind('click', function() {
-        toiletInfo(lng,lat)
-    })
-
-     
-    }
-
-
-
-    </script> -->
 </html>

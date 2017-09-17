@@ -1,46 +1,21 @@
 //플러그인 설치가 선행되어야함[cordova plugin add cordova-plugin-geolocation]
-//GPS사용가능한지 확인
+//GPS사용가능한지 확인[브라우저에서 테스트하려면 주석처리] //실제 안드로이드 배포시에는 checkAvailability 주석해제
 /*function checkAvailability() {
     cordova.plugins.diagnostic.isGpsLocationEnabled(function(available){
         if (!available) {
             alert("내 위치 정보를 사용하려면, 단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
             history.back();
         } else {
-            gpsMapToilet();
+            toiletInfo();
         }
     }, function(error) {
         console.error("The following error occurred: " + error);
     });
-}
-
-checkAvailability();*/
-
-
-//*본인 위치 위도경도 구하기*
-/*function getMyGpsPosition() {
-
-  checkAvailability();
-
-    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 360000
-    });
-
-    function onSuccess(position) {
-
-        maptest(position.coords.latitude, position.coords.longitude);
-
-    }
-
-    function onError(error) {
-        console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-    }
 }*/
 
-
+//강원도청있는 곳 가데이터
 var urlpath = 'http://13.114.79.230:8080/gangwon';
-
+//var urlpath = 'http://localhost:8080';
 var iconBase = urlpath +'/img/';
 var icons = {
   myGpsLocation: {
@@ -120,7 +95,7 @@ function toiletInfo() {
 //공중화장실찾기 버튼 클릭시 자신위치와 화장실 정보 보여줌(가장 가까운 화장실이 정보창으로 뜸)
 $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를때 셋팅  
 
-      checkAvailability();
+     //checkAvailability();
 
       //다른 아이콘으로 표시
       if (navigator.geolocation) {
@@ -128,54 +103,66 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
         
         //ajax에서 데이터 넘겨줘야하니 무조건있어야함
         pos = {
-          lat: 37.81774409, //가데이터
-          lng: 127.7158701 //가데이터
+          lat: 37.8828686, //가데이터 강원도청 근처
+          lng: 127.7220181 //가데이터 강원도청 근처
             //***********실제 적용 데이터 lat: position.coords.latitude,
             //***********실제 적용 데이터 lng: position.coords.longitude
-          //  lat: position.coords.latitude,
-          //lng: position.coords.longitude
-
+ //         lat: position.coords.latitude,
+ //         lng: position.coords.longitude
         };
 
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15 , //1이면 전세계 (기존 15)
-            center: new google.maps.LatLng(37.8174296, 127.7115919),
+            center: new google.maps.LatLng(37.8828686, 127.7220181),  //강원도청
+  //          center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
             mapTypeId: 'roadmap'
         });
-
-
 
         //-- test --
           $.ajax({
               url : urlpath +"/toilet",
               type : 'GET',
-              async: false,
+              async: true,
+              cache: false,
               data : pos,     //현재위치 
               crossdomain:true,
               dataType : "json",
               timeout: 600000, 
+              complete:function(){
+                $('.wrap-loading').css('display','none');
+              }, 
               success : function(data){
 
                var contentString1 = [];
                var contentString1 = '<div id="toiletContent">현재 위치</div>'
 
                //실데이터(아래 주석풀어야)
-/*                  var locations = [
+/*               var locations = [
                 {position : new google.maps.LatLng(position.coords.latitude, position.coords.longitude), type:'myGpsLocation', content: contentString1}
-                ];*/
+               ];*/
+
                locations = [
-                {position : new google.maps.LatLng(37.8174296, 127.7158701), type:'myGpsLocation', content: contentString1 } //현재위치
+                 {position : new google.maps.LatLng(37.8828686, 127.7220181), type:'myGpsLocation', content: contentString1 } //현재위치
                ];
 
+                  for(var i=0; i<data.length; i++){
 
-               for(var i=0; i<data.length; i++){
+                      contentString1 = '<div id="toiletContent"><b>[화장실명]</b>'+data[i].toilet_nm;
+                      var contentString2;
+                      var contentString3;
+                      
+                      if(data[i].locplc_roadnm_addr != ""){
+                        contentString2 = '<br/><b>도로명 주소 : </b>' +data[i].locplc_roadnm_addr;
+                        contentString1 = contentString1 + contentString2;
+                      }
 
-                     contentString1 = '<div id="toiletContent"><b>[화장실명]</b> '+data[i].toilet_nm;
 
-                     /* contentString1 = '<div id="toiletContent">'+
-                        '<h1 id="firstHeading" class="firstHeading">[화장실명] '+data[i].toilet_nm+'</h1>'+
-                        '<div id="bodyContent">';
+                      if(data[i].locplc_lotno_addr != ""){
+                        contentString3 = '<br/><b>지번 주소 : </b>' +data[i].locplc_lotno_addr;
+                        contentString1 = contentString1 + contentString3;
+                      }
 
+                     /* 
                       var contentString2;
                       var contentString3;
                       var contentString4;
@@ -226,13 +213,10 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
                         contentString7 = '어린이용 - 0개';  
                         contentString1 = contentString1 + contentString7;                    
                       }
- 
-                     //선택된 데이터의 seq를 가지고, 넘길 페이지 아이디를 가지고 페이지 넘기기
-                      contentString8= '<br/><a href="#" onclick="goComment(\''+ data[i].seq + '\');" >댓글</a>';      //여기에 의견 텍스트입력하도록 해도되지만 의견남기기 클릭하면 다음페이지로 넘어가서 등록하도록 할거임
-                      contentString1 = contentString1 + contentString8; 
-                      */
 
-                      contentString8= '<br/><a href="#" onclick="goComment(\''+ data[i].seq + '\');" >댓글</a></div>';      //여기에 의견 텍스트입력하도록 해도되지만 의견남기기 클릭하면 다음페이지로 넘어가서 등록하도록 할거임
+                      */
+                      //선택된 데이터의 seq를 가지고, 넘길 페이지 아이디를 가지고 페이지 넘기기
+                      var contentString8= '<br/><a href="#" onclick="goComment(\''+ data[i].seq + '\');" >댓글</a></div>';      //여기에 의견 텍스트입력하도록 해도되지만 의견남기기 클릭하면 다음페이지로 넘어가서 등록하도록 할거임
                       contentString1 = contentString1 + contentString8; 
 
                       var loc={position : new google.maps.LatLng(parseFloat(data[i].lat), parseFloat(data[i].lng)), type:'dataLocation', content : contentString1 }; //lat "23.wqe" => ""를 없애야됨
@@ -294,8 +278,9 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
 
 });
 }
-
+//가장 가까운 화장실 찾기
 function nearToiletSearch(){
+
       var marker = new google.maps.Marker({
             position: locations[1].position,
             icon: '/img/mapIcon.png',
@@ -312,6 +297,19 @@ function nearToiletSearch(){
 //댓글 등록 시 [초기, 등록 후 모두 seq 들어감]
 function goCmtRegist(seq){
     
+      //유효성체크
+      if( $('input[name=seq]').val() != "" && $('input[name=cmt_id]').val() == "" )
+      {
+           alert( "댓글을 등록하려면 이름을 입력하세요" );
+           //return false;
+           return goComment(seq);
+      }
+      if( $('input[name=seq]').val() != "" && $('input[name=cmt_content]').val() == "" )
+      {    
+          alert( "댓글을 등록하려면 내용을 입력하세요" );
+          return goComment(seq);
+      }
+
       $.ajax({
           url : urlpath + "/toiletCmtRegist",          
           type : 'POST',

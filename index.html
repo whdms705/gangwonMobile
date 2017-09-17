@@ -167,82 +167,86 @@
        
         </div>
 
-        <!-- 공중화장실 -->
-        <div data-role="page" id="toilet">
-            <div data-role="header">
-                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-                <h1>주변 공중화장실 찾기</h1>
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+
+    <!-- 공중화장실 -->
+    <div data-role="page" id="toilet">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>주변 공중화장실 찾기</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+            <div class="map_wrap">
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="map" style="width:100%;min-height:500px;"></div>
+                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
             </div>
-            <div data-role="content" class="ui-content" style="padding:0">
-                <div class="map_wrap">
-                    <!-- 지도를 표시할 div 입니다 -->
-                    <div id="map" style="width:100%;min-height:500px;"></div>
-                    <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
+        </div>
+        <!-- start 로딩 이미지   -->
+        <div class="wrap-loading" style="">
+            <div id="tLoading"> <img src="img/loader.gif" /></div>
+        </div>
+        <!-- end 로딩 이미지   -->
+    </div>
+
+    <div data-role="page" id="commentWrt">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>댓글</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+        </div>
+        <div data-ajax="false" data-role="content" id="cmtContent" class="ui-content" style="padding:0">
+            <form id="commentForm" action="#" method="post" >    
+                <div id="commentList">
+
                 </div>
-            </div>
+                <div id="commentRegist" >
+                
+                </div>  
+                <input name="seq" id="seq" type="hidden" value="">
+            </form>  
+        </div>
+    </div>
+
+    <!-- 주차장 -->
+    <div data-role="page" id="parking">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>주변 주차장 찾기</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
             <!-- start 로딩 이미지   -->
-            <div class="wrap-loading" style="">
-                <div> <img src="img/loader.gif" /></div>
+             <div class="p_wrap-loading" style="">
+                <div id="pLoading"> <img src="img/loader.gif"/></div>
             </div>
-            <!-- end 로딩 이미지   -->
+            <!-- end 로딩 이미지   -->   
+            <div class="map_wrap">
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="parkingmap" style="width:100%;min-height:500px;"></div>
+                <button class="ui-btn" id="nearToilet" onclick="nearParkingSearch()" style="height:30px;">가장 가까운 주차장 찾기</button>
+            </div>
+        </div>     
+    </div>
+
+    <div data-role="page" id="parkingCommentWrt">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>댓글</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
+        <div data-role="content" id="parkingCmtContent" class="ui-content" style="padding:0">
+            <form id="parkingCommentForm" action="#" method="post" >    
+                <div id="parkingCommentList">
 
-        <div data-role="page" id="commentWrt">
-            <div data-role="header">
-                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-                <h1>댓글</h1>
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            </div>
-            <div data-ajax="false" data-role="content" id="cmtContent" class="ui-content" style="padding:0">
-                <img id="cpImage"/>
-                <form id="commentForm" action="#" method="post" >    
-                    <div id="commentList">
-
-                    </div>
-                    <div id="commentRegist" >
-                    
-                    </div>  
-                    <input name="seq" id="seq" type="hidden" value="">
-                </form>  
-            </div>
-        </div>
-
-        <!-- 주차장 -->
-        <div data-role="page" id="parking">
-            <div data-role="header">
-                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-                <h1>주변 주차장 찾기</h1>
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            </div>
-            <div data-role="content" class="ui-content" style="padding:0">
-                <div class="map_wrap">
-                    <!-- 지도를 표시할 div 입니다 -->
-                    <div id="parkingmap" style="width:100%;min-height:500px;"></div>
-                    <button class="ui-btn" id="nearToilet" onclick="nearParkingSearch()" style="height:30px;">가장 가까운 주차장 찾기</button>
                 </div>
-            </div>
+                <div id="parkingCommentRegist" >
+                
+                </div>  
+                <input name="seq" id="seq" type="hidden" value="">
+            </form>  
         </div>
-
-        <div data-role="page" id="parkingCommentWrt">
-            <div data-role="header">
-                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-                <h1>댓글</h1>
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            </div>
-            <div data-role="content" id="parkingCmtContent" class="ui-content" style="padding:0">
-                <img id="cpImage"/>
-                <form id="parkingCommentForm" action="#" method="post" >    
-                    <div id="parkingCommentList">
-
-                    </div>
-                    <div id="parkingCommentRegist" >
-                    
-                    </div>  
-                    <input name="seq" id="seq" type="hidden" value="">
-                </form>  
-            </div>
-        </div>
+    </div>
 
         <!-- start of festival page -->
         <div data-role="page" id="festival">
@@ -357,5 +361,4 @@
         <!-- end of festivalDetail page -->
 
     </body>
-
 </html>

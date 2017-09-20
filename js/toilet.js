@@ -13,27 +13,6 @@
     });
 }
 */
-//*본인 위치 위도경도 구하기*
-/*function getMyGpsPosition() {
-
-  checkAvailability();
-
-    navigator.geolocation.getCurrentPosition(onSuccess, onError, {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 360000
-    });
-
-    function onSuccess(position) {
-
-        maptest(position.coords.latitude, position.coords.longitude);
-
-    }
-
-    function onError(error) {
-        console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-    }
-}*/
 
 //강원도청있는 곳 가데이터
 var urlpath = 'http://13.114.79.230:8080/gangwon';
@@ -68,32 +47,58 @@ function goComment(seq, regYn) {
           dataType : "json",
           timeout: 600000, 
           success : function(data){
+            console.log(JSON.stringify(data));
 
             $('input[name=seq]').attr('value',seq);
 
             //regYn이 y일 경우(댓글을 등록했을 경우 => append한거 나오지 않도록 초기화)   
             $('#commentList').empty();
             $('#commentRegist').empty();
+            $('#commentCount').empty();
+            $('#commentCount').append("Comments("+data.length+")");
 
             var commentListContent1;
             //댓글리스트가 조회되지않을 경우
             if(data.length == 0 && data.seq == undefined && regYn == undefined){
                 commentListContent1 = '댓글이 없습니다';
-                commentListContent2 = '<div id="commentRegist"><label for="cmt_id">이름</label><input name="cmt_id" id="cmt_id" type="text" value=""><label for="cmt_content">내용</label><input name="cmt_content" id="cmt_content" type="text" value="">';
-                commentListContent1 = commentListContent1 + commentListContent2;
-                commentListContent3 = '<button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" style="height:40px;">등록</button></div>'
-                commentListContent1 = commentListContent1 + commentListContent3;
-               $("#commentList").append(commentListContent1);   //생성한리스트를 div에 붙여서 생성
+                commentListContent2 =  '<div class="form-group">'
+                                      +'<input name="cmt_id" id="cmt_id" type="text" value="" placeholder="Your Name" class="form-control c-square">'
+                                      +'</div>'
+                                      +'<div class="form-group">'
+                                      +'<textarea name="cmt_content" id="cmt_content" rows="8" value="" class="form-control c-square"></textarea>'
+                                      +'</div>';
+                commentListContent3 =  '<div class="form-group">' 
+                                      +'<button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block">등록</button>'
+                                      +'</div>';
+                commentListContent2 = commentListContent2 + commentListContent3;
+               $("#commentList").append(commentListContent1);
+               $("#commentRegist").append(commentListContent2);   //생성한리스트를 div에 붙여서 생성
             }else{                                             //댓글이 있을경우
 
                 for(var i=0; i<data.length; i++){   //조회된 건수만큼 이름, 내용 찍기                  
-                  commentListContent1 = '순번 :' + parseInt(parseInt(i)+parseInt(1)) +'<br/> 이름:'+data[i].cmt_id+'<br/>내용:' + data[i].cmt_content+'<br/><br/>';                 
+                  commentListContent1 = '순번 :' + parseInt(parseInt(i)+parseInt(1)) +'<br/> 이름:'+data[i].cmt_id+'<br/>내용:' + data[i].cmt_content+'<br/><br/>';
+                  commentListContent1 = '<div class="media">'
+                                       +'<div class="media-body">'
+                                       +'<h4 class="media-heading">'
+                                       +'<span id="comment_name">'+data[i].cmt_id+'</span> on'
+                                       +'<span class="c-date">'+data[i].cmt_dt+'</span>'
+                                       +'</h4>'+data[i].cmt_content+'</div>'
+                                       +'</div>'
+                                       +'<hr>';      
                   $("#commentList").append(commentListContent1);   //생성한리스트를 div에 붙여서 생성                  
                 }
                 
-                  commentListContent2 = '<label for="cmt_id">이름</label><input name="cmt_id" id="cmt_id" type="text" value=""><label for="cmt_content">내용</label><input name="cmt_content" id="cmt_content" type="text" value="">';
-                  commentListContent3 = '<button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" style="height:40px;">등록</button>'
+                  commentListContent2 =  '<div class="form-group">'
+                                        +'<input name="cmt_id" id="cmt_id" type="text" value="" placeholder="Your Name" class="form-control">'
+                                        +'</div>'
+                                        +'<div class="form-group">'
+                                        +'<textarea name="cmt_content" id="cmt_content" rows="8" value="" class="form-control"></textarea>'
+                                        +'</div>';
+                  commentListContent3 =  '<div class="form-group">' 
+                                        +'<button id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block">등록</button>'
+                                        +'</div>';
                   commentListContent2 = commentListContent2 + commentListContent3;
+                  console.log(commentListContent2);
                   $("#commentRegist").append(commentListContent2);   //생성한리스트를 div에 붙여서 생성
             }
 
@@ -165,7 +170,7 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
                var contentString1 = '<div id="toiletContent">현재 위치</div>'
 
                //실데이터(아래 주석풀어야)
-/*               var locations = [
+/*             locations = [
                 {position : new google.maps.LatLng(position.coords.latitude, position.coords.longitude), type:'myGpsLocation', content: contentString1}
                ];*/
 

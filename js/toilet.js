@@ -170,7 +170,7 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
                var contentString1 = '<div id="toiletContent">현재 위치</div>'
 
                //실데이터(아래 주석풀어야)
-/*              locations = [
+/*             locations = [
                 {position : new google.maps.LatLng(position.coords.latitude, position.coords.longitude), type:'myGpsLocation', content: contentString1}
                ];*/
 

@@ -46,10 +46,32 @@
         <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
 
-        <style type="text/css">
- 
-        </style>
+        <!-- BEGIN CORE PLUGINS -->
+        <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+        <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <!-- END CORE PLUGINS -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <script src="assets/global/plugins/moment.min.js" type="text/javascript"></script>
+        <script src="assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+        <!-- END THEME GLOBAL SCRIPTS -->
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+        <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+        <script src="assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+        <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+        <script src="assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
+        <!-- END THEME LAYOUT SCRIPTS -->
 
+        <style type="text/css">
+        #comment_name{
+            color: #9aa5b2;
+            font-weight: 600;
+        }
+        </style>
 
 
 
@@ -57,10 +79,46 @@
 
     <body>
 
+                    <!--HOMEPAGE-->
+        <div data-role="page" id="home2" class="mypage">
+            <div data-role="header" style="padding:.3em 0;">
+                <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><img id="icon1" src="img/icon1.png"/> 나만의 강원도</h1>
+            </div>
+            <div data-role="content" class="content" style="padding:1em 0;">
+                <div class="main_content" style="text-align:center;">
+
+                    <div class="circle-text circle-text-home" onclick="selectAnimalPage()" style="margin-bottom:5%;">
+                        <div id="searchByCategory"><a style="color:black; font-size:0.8em" class="circle-text-a">증상으로 질병 찾기 </a></div>
+                    </div>
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
+                    </div>
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <!-- GPS를 이용한 근처 공중화장실 지도 띄우기 -->
+                        <a id="toilet" href="#toilet" onclick="toiletInfo()" class="ui-btn menubarA" >공중화장실</a>
+                    </div>
+
+                </div>
+            </div>
+            <div data-role="footer">
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 동물 질병 정보에 대한 일반인의 이해를 돕기 위한 참고자료일 뿐이며 동물의 증상과 질병에 대한 진단이나 치료의 적용을 위해서는 반드시 수의사와 상담하시기 바랍니다.</p>
+            </div>
+            <div data-role="footer" data-position="fixed" class="footerNavi" data-tap-toggle="false">
+                <nav data-role="navbar">
+                    <ul>
+                        <li> <a href="#home" class="ui-btn-active ui-state-persist navA" data-icon="home">홈</a></li>
+                        <li> <a href="missed.html" class="navA" data-icon="search">보호·분실</a></li>
+                        <li> <a href="timeLine.html" class="navA" data-icon="bullets">스토리</a></li>
+                        <li> <a href="setting.html" class="navA" data-icon="gear">더보기</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
 
 
         <!-- 메인 -->
-        <div data-role="page" id="home" class="mypage">
+        <div data-role="page" id="home2" class="mypage">
                 <div data-role="header" style="padding:.3em 0;">
                     <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><!-- <img id="icon1" src="img/icon1.png"/> --> 강원도</h1>
                 </div>
@@ -196,7 +254,44 @@
             <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
         </div>
         <div data-ajax="false" data-role="content" id="cmtContent" class="ui-content" style="padding:0">
-            <form id="commentForm" action="#" method="post" >    
+            <div class="page-content-wrapper">
+            <div class="page-content">
+                <div class="blog-page blog-content-2">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="blog-single-content bordered blog-container">
+
+                             
+                                <div class="blog-comments">
+                                    <h3 id="commentCount" class="sbold blog-comments-title"></h3>
+                                    <form id="commentForm" action="#" method="post" >
+                                        <div class="c-comment-list">
+                                            <div id="commentList">
+
+
+
+                                            </div>
+                                        </div>
+                                    <h3 class="sbold blog-comments-title">Leave A Comment</h3>
+                                        <div id="commentRegist">
+                                        
+                                        </div>
+                                        <input name="seq" id="seq" type="hidden" value="">
+                                    </form>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+
+
+
+<!--             <form id="commentForm" action="#" method="post" >    
                 <div id="commentList">
 
                 </div>
@@ -204,7 +299,7 @@
                 
                 </div>  
                 <input name="seq" id="seq" type="hidden" value="">
-            </form>  
+            </form>   -->
         </div>
     </div>
 
@@ -338,7 +433,7 @@
                                                 
                                             </div>
                                             <p>
-                                                <a href="javascript:;" class="btn blue"> 지도보기 </a>
+                                                <a href="#festivalMap" onclick="festivalMapSeq()" class="btn blue"> 지도보기 </a>
                                                 <a href="javascript:;" class="btn default"> 돌아가기 </a>
                                             </p>
                                         </div>
@@ -359,6 +454,28 @@
                 </div>-->
         </div>
         <!-- end of festivalDetail page -->
+
+        <!-- 축제지도 -->
+        <div data-role="page" id="festivalMap">
+            <div data-role="header">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                <h1>축제 위치</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            </div>
+            <div data-role="content" class="ui-content" style="padding:0">
+                <div class="map_wrap">
+                    <!-- 지도를 표시할 div 입니다 -->
+                    <div id="fmap" style="width:100%;min-height:500px;"></div>        
+                </div>
+            </div>
+            <!-- start 로딩 이미지   -->
+            <!-- <div class="wrap-loading" style="">
+                <div id="fLoading"> <img src="img/loader.gif" /></div>
+            </div> -->
+            <!-- end 로딩 이미지   -->
+        </div>
+        <!-- 축제지도 -->
+
 
     </body>
 </html>

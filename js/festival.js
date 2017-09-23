@@ -1,5 +1,9 @@
-function festivalInfo(){
-console.log(123)
+var festival_more_count;
+
+function festivalInfo(nation){
+  
+  festival_more_count=1;
+
   var now = new Date();
   var year= now.getFullYear();
   var mon = (now.getMonth()+1)>9 ? ''+(now.getMonth()+1) : '0'+(now.getMonth()+1);
@@ -7,8 +11,22 @@ console.log(123)
           
   var startDate = year + '-' + mon + '-' + day;
   console.log(" now() -> "+startDate);
+
+  var service="KorService";
+	if(nation=="kr"){
+		service="KorService";
+	}else if(nation=="jp"){
+		service="JpnService";
+	}else if(nation=="ca"){
+		service="ChsService";
+	}else if(nation=="en"){
+		service="EngService";
+	}
   
-  var url = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/searchFestival?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&eventStartDate="+startDate+"&eventEndDate=&areaCode=32&sigunguCode=&cat1=A02&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=Q&numOfRows=12&pageNo=1"
+
+  // 축제공연행사 -> 인문 -> 강원도 -> 최근이미지수정순
+  var url = "http://api.visitkorea.or.kr/openapi/service/rest/"+service+"/searchFestival?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&eventStartDate="+startDate+"&eventEndDate=&areaCode=32&sigunguCode=&cat1=A02&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=Q&numOfRows=12&pageNo="+festival_more_count;
+  
 
 	$.ajax({
 	    url : url,
@@ -18,6 +36,8 @@ console.log(123)
 	    success : function(res){
 	    	console.log(res);
 	        console.log("response data : "+res);
+	        $("#festival_content").empty();
+
 
 	        $(res).find('item').each(function(){
 
@@ -47,7 +67,70 @@ console.log(123)
 }
 
 
-function content(image1,title,contenttypeid,contentid){
+// 축제보기 더보기 버튼 클릭시
+function festivalMore(nation){
+  festival_more_count=festival_more_count+1;
+
+  var now = new Date();
+  var year= now.getFullYear();
+  var mon = (now.getMonth()+1)>9 ? ''+(now.getMonth()+1) : '0'+(now.getMonth()+1);
+  var day = now.getDate()>9 ? ''+now.getDate() : '0'+now.getDate();
+          
+  var startDate = year + '-' + mon + '-' + day;
+  console.log(" now() -> "+startDate);
+
+
+	var service="KorService";
+	if(nation=="kr"){
+		service="KorService";
+	}else if(nation=="jp"){
+		service="JpnService";
+	}else if(nation=="ca"){
+		service="ChsService";
+	}else if(nation=="en"){
+		service="EngService";
+	}
+  
+  var url = "http://api.visitkorea.or.kr/openapi/service/rest/"+service+"/searchFestival?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&eventStartDate="+startDate+"&eventEndDate=&areaCode=32&sigunguCode=&cat1=A02&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=Q&numOfRows=12&pageNo="+festival_more_count;
+
+	$.ajax({
+	    url : url,
+	    type : "GET",
+	    dataType: "xml",
+        crossDomain: true,
+	    success : function(res){
+	    	console.log(res);
+	        console.log("response data : "+res);
+
+	        $(res).find('item').each(function(){
+
+	        	
+	        		var title = $(this).find("title").text();
+	        		var image1 = $(this).find("firstimage").text();
+	        		var contenttypeid = $(this).find("contenttypeid").text();
+	        		var contentid = $(this).find("contentid").text();
+
+	        		console.log(contenttypeid +"  "+contentid );
+	        		if(image1===""){
+	        			image1="/img/noImage.gif";
+	        		}
+	        		var festival_content=content(image1,title,contenttypeid,contentid,service);
+	        		console.log(festival_content)
+	        		$("#festival_content").append(festival_content);		
+
+
+	        });
+
+
+
+	    }
+	});
+
+
+}
+
+
+function content(image1,title,contenttypeid,contentid,service){
     
     //너무 긴 제목을 점점으로 처리 
 	var title_temp=title.substring(9,title.length);
@@ -57,7 +140,7 @@ function content(image1,title,contenttypeid,contentid){
 
 	//console.log("function content(..) -> "+contenttypeid+" / "+contentid);
 
-	var mappingInfo=contenttypeid+","+contentid; // 상세정보를 가져오기 위한 정보
+	var mappingInfo=contenttypeid+","+contentid+","+service; // 상세정보를 가져오기 위한 정보
 
 
 	var content='<div class="col-xs-6">'
@@ -78,7 +161,8 @@ function contentDetail(mappingInfo){
 	console.log("contentDetail function ----------------------------------------- ");
 	var temp = mappingInfo.split(",");
 	var contenttypeid = temp[0];
-	var contentid = temp[1]; 
+	var contentid = temp[1];
+	var service = temp[2]; 
 
 	//alert(contenttypeid+" "+contentid)
 	$.mobile.changePage( "#festivalDetail", { transition: "slideup", changeHash: false });
@@ -86,7 +170,7 @@ function contentDetail(mappingInfo){
 	var  festival_info;
 
 	// start of festival common
-	var url ="http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&contentTypeId="+contenttypeid+"&contentId="+contentid+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y";
+	var url ="http://api.visitkorea.or.kr/openapi/service/rest/"+service+"/detailCommon?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&contentTypeId="+contenttypeid+"&contentId="+contentid+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y";
 		$.ajax({
 	    url : url,
 	    type : "GET",
@@ -129,7 +213,7 @@ function contentDetail(mappingInfo){
 	// end of festival common
 
 	// start of festival detail
-	 	url ="http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&contentTypeId="+contenttypeid+"&contentId="+contentid+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y";
+	 	url ="http://api.visitkorea.or.kr/openapi/service/rest/"+service+"/detailIntro?ServiceKey=qK1psrABUse%2B6Tww%2FOK5CxjWAGvy4TvUqb45X%2BPfcy5rPmaANYIhQbIXxobp1H7TYAeFDE%2BYSQsbndxWweL9zA%3D%3D&contentTypeId="+contenttypeid+"&contentId="+contentid+"&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y";
 		$.ajax({
 	    url : url,
 	    type : "GET",

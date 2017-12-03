@@ -1,17 +1,18 @@
 //플러그인 설치가 선행되어야함[cordova plugin add cordova-plugin-geolocation]
 //GPS사용가능한지 확인[브라우저에서 테스트하려면 주석처리] //실제 안드로이드 배포시에는 checkAvailability 주석해제
-/*function checkAvailability() {
+function checkAvailability_parking() {
     cordova.plugins.diagnostic.isGpsLocationEnabled(function(available){
+        
         if (!available) {
             alert("내 위치 정보를 사용하려면, 단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
-            history.back();
         } else {
+            location.href="#parking";
             parkingInfo();
         }
     }, function(error) {
         console.error("The following error occurred: " + error);
     });
-}*/
+}
  //금병초있는곳 가데이터
 var urlpath = 'http://13.114.79.230:8080/gangwon';
 //var urlpath = 'http://localhost:8080';
@@ -30,7 +31,7 @@ var infowindow="";
 var map;
 var locations;
 
-//댓글 클릭시 리스트
+//댓글 클릭시 리스트 (공중화장실꺼)
 function goParkingComment(seq, regYn) {
     var regYn;             //등록 여부 => 등록 후 해당 함수 부를때 댓글이 없습니다 보이지 않게 하기 위함
     var seq = seq;
@@ -45,33 +46,63 @@ function goParkingComment(seq, regYn) {
           dataType : "json",
           timeout: 600000, 
           success : function(data){
+            console.log(JSON.stringify(data));
 
             $('input[name=seq]').attr('value',seq);
 
             //regYn이 y일 경우(댓글을 등록했을 경우 => append한거 나오지 않도록 초기화)   
             $('#parkingCommentList').empty();
             $('#parkingCommentRegist').empty();
+            $('#parkingcommentCount').empty();  
+            $('#parkingcommentCount').append("Comments("+data.length+")");
 
-            var commentListContent1;
+            var parkingcommentListContent1;
+            var parkingcommentListContent2;
+            var parkingcommentListContent3;
+
+
             //댓글리스트가 조회되지않을 경우
             if(data.length == 0 && data.seq == undefined && regYn == undefined){
-                commentListContent1 = '댓글이 없습니다';
-                commentListContent2 = '<div id="parkingCommentRegist"><label for="cmt_id">이름</label><input name="cmt_id" id="cmt_id" type="text" value=""><label for="cmt_content">내용</label><input name="cmt_content" id="cmt_content" type="text" value="">';
-                commentListContent1 = commentListContent1 + commentListContent2;
-                commentListContent3 = '<button class="ui-btn" id="cmtRegBut" onclick="goParkingCmtRegist(\''+seq+'\')" style="height:40px;">등록</button></div>'
-                commentListContent1 = commentListContent1 + commentListContent3;
-               $("#parkingCommentList").append(commentListContent1);   //생성한리스트를 div에 붙여서 생성
+                parkingcommentListContent1 = '댓글이 없습니다';
+                parkingcommentListContent2 =  '<div class="form-group">'
+                                      +'<input name="cmt_id" id="cmt_id" type="text" value="" placeholder="Your Name" class="form-control c-square">'
+                                      +'</div>'
+                                      +'<div class="form-group">'
+                                      +'<input name="cmt_content" id="cmt_content" value="" class="form-control c-square">'
+                                      +'</div>';
+                parkingcommentListContent3 =  '<div class="form-group">' 
+                                      +'<button id="cmtRegBut" onclick="goParkingCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block" style="text-shadow:none;">등록</button>'
+                                      +'</div>';
+                parkingcommentListContent2 = parkingcommentListContent2 + parkingcommentListContent3;
+               $("#parkingCommentList").append(parkingcommentListContent1);
+               $("#parkingCommentRegist").append(parkingcommentListContent2);   //생성한리스트를 div에 붙여서 생성
             }else{                                             //댓글이 있을경우
 
                 for(var i=0; i<data.length; i++){   //조회된 건수만큼 이름, 내용 찍기                  
-                  commentListContent1 = '순번 :' + parseInt(parseInt(i)+parseInt(1)) +'<br/> 이름:'+data[i].cmt_id+'<br/>내용:' + data[i].cmt_content+'<br/><br/>';                 
-                  $("#parkingCommentList").append(commentListContent1);   //생성한리스트를 div에 붙여서 생성                  
+                  parkingcommentListContent1 = '순번 :' + parseInt(parseInt(i)+parseInt(1)) +'<br/> 이름:'+data[i].cmt_id+'<br/>내용:' + data[i].cmt_content+'<br/><br/>';
+                  parkingcommentListContent1 = '<div class="media">'
+                                       +'<div class="media-body">'
+                                       +'<h4 class="media-heading">'
+                                       +'<span id="comment_name">'+data[i].cmt_id+'</span> on'
+                                       +'<span class="c-date">'+data[i].cmt_dt+'</span>'
+                                       +'</h4>'+data[i].cmt_content+'</div>'
+                                       +'</div>'
+                                       +'<hr>';      
+                  $("#parkingCommentList").append(parkingcommentListContent1);   //생성한리스트를 div에 붙여서 생성                  
                 }
                 
-                  commentListContent2 = '<label for="cmt_id">이름</label><input name="cmt_id" id="cmt_id" type="text" value=""><label for="cmt_content">내용</label><input name="cmt_content" id="cmt_content" type="text" value="">';
-                  commentListContent3 = '<button class="ui-btn" id="cmtRegBut" onclick="goParkingCmtRegist(\''+seq+'\')" style="height:40px;">등록</button>'
-                  commentListContent2 = commentListContent2 + commentListContent3;
-                  $("#parkingCommentRegist").append(commentListContent2);   //생성한리스트를 div에 붙여서 생성
+                  parkingcommentListContent2 =  '<div class="form-group">'
+                                        +'<input name="cmt_id" id="cmt_id" type="text" value="" placeholder="Your Name" class="form-control">'
+                                        +'</div>'
+                                        +'<div class="form-group">'
+                                        +'<input name="cmt_content" id="cmt_content" value="" class="form-control c-square">'                                      
+                                        +'</div>';
+                  parkingcommentListContent3 =  '<div class="form-group">' 
+                                        +'<button id="cmtRegBut" onclick="goParkingCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block" style="text-shadow:none;">등록</button>'
+                                        +'</div>';
+                  parkingcommentListContent2 = parkingcommentListContent2 + parkingcommentListContent3;
+                  console.log(parkingcommentListContent2);
+                  $("#parkingCommentRegist").append(parkingcommentListContent2);   //생성한리스트를 div에 붙여서 생성
             }
 
             location.href = "#parkingCommentWrt?seq="+seq;      //페이지 이동
@@ -89,9 +120,11 @@ function goParkingComment(seq, regYn) {
 
 function parkingInfo(){
 //주차장찾기 버튼 클릭시 자신위치와 주차장 정보 보여줌(가장 가까운 화장실이 정보창으로 뜸)
+//location.reload();
 $(document).on('pageshow', '#parking', function (){   //뒤로가기 버튼 누를때 셋팅 
+      $('.p_wrap-loading').css('display','');
 
-     // checkAvailability();    //안드로이드 배포 시 주석해제해야함
+      //checkAvailability();    //안드로이드 배포 시 주석해제해야함
       
       //다른 아이콘으로 표시
       if (navigator.geolocation) {
@@ -99,24 +132,25 @@ $(document).on('pageshow', '#parking', function (){   //뒤로가기 버튼 누�
         
         //ajax에서 데이터 넘겨줘야하니 무조건있어야함
         pos = {
-          lat: 37.81774409, //가데이터
-          lng: 127.7158701 //가데이터
+      //    lat: 37.81774409, //가데이터
+      //    lng: 127.7158701 //가데이터
             //***********실제 적용 데이터 lat: position.coords.latitude,
             //***********실제 적용 데이터 lng: position.coords.longitude
-   //         lat: position.coords.latitude,
-   //         lng: position.coords.longitude
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
         };
 
         map = new google.maps.Map(document.getElementById('parkingmap'), {
           zoom: 15 , //1이면 전세계 (기존 15)
- //         center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          center: new google.maps.LatLng(37.8174296, 127.7115919),
+          center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+ //         center: new google.maps.LatLng(37.8174296, 127.7115919),
           mapTypeId: 'roadmap'
         });
 
         //-- test --
           $.ajax({
-              url  :urlpath + "/parking",
+              url  :urlpath + "/parking/j",
+              //url:"http://localhost:8080/parking/j",
               type : 'GET',
               async: true,
               data : pos,     //현재위치 
@@ -132,14 +166,13 @@ $(document).on('pageshow', '#parking', function (){   //뒤로가기 버튼 누�
                var contentString1 = '<div id="parkingContent">현재 위치</div>'
 
                //실데이터(아래 주석풀어야)
-              /* locations = [
+               locations = [
                 {position : new google.maps.LatLng(position.coords.latitude, position.coords.longitude), type:'myGpsLocation', content: contentString1}
                ];
-*/
-               locations = [
-                {position : new google.maps.LatLng(37.8174296, 127.7158701), type:'myGpsLocation', content: contentString1 } //현재위치
-               ];
 
+/*               locations = [
+                {position : new google.maps.LatLng(37.8174296, 127.7158701), type:'myGpsLocation', content: contentString1 } //현재위치
+               ];*/
 
                for(var i=0; i<data.length; i++){
 
@@ -269,18 +302,17 @@ function nearParkingSearch(){
 function goParkingCmtRegist(seq){
 
       //유효성체크
-      if( $('input[name=seq]').val() != "" && $('input[name=cmt_id]').val() == "" )
+      if( $('input[name=seq]').val() != "" && $('input[name=cmt_id]').val() == "")
       {
            alert( "댓글을 등록하려면 이름을 입력하세요" );
            //return false;
            return goParkingComment(seq);
       }
-      if( $('input[name=seq]').val() != "" && $('input[name=cmt_content]').val() == "" )
+      if( $('input[name=seq]').val() != "" && $('#cmt_content').val() == "" )
       {    
           alert( "댓글을 등록하려면 내용을 입력하세요" );
           return goParkingComment(seq);
       }
-
     
       $.ajax({
           url : urlpath +"/parkingCmtRegist",           

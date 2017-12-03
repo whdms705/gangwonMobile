@@ -1,6 +1,6 @@
-function nationCheck(nation){
+function festivalNationCheck(nation){
 	
-	alert("nationCheck : "+nation)
+	//alert("nationCheck : "+nation)
 	if(nation=="kr"){
 		$.mobile.changePage("#koreaHome");
 	}else if(nation=="jp"){
@@ -12,3 +12,5 @@ function nationCheck(nation){
 	}
 
 }
+
+

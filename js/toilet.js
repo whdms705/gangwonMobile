@@ -1,18 +1,20 @@
 //플러그인 설치가 선행되어야함[cordova plugin add cordova-plugin-geolocation]
 //GPS사용가능한지 확인[브라우저에서 테스트하려면 주석처리] //실제 안드로이드 배포시에는 checkAvailability 주석해제
-/*function checkAvailability() {
+function checkAvailability_toliet() {
     cordova.plugins.diagnostic.isGpsLocationEnabled(function(available){
         if (!available) {
             alert("내 위치 정보를 사용하려면, 단말기의 설정에서 '위치 서비스' 사용을 허용해주세요.");
-            history.back();
+            //  $.mobile.changePage("#main");
+            //history.back();
         } else {
+            location.href="#toilet";
             toiletInfo();
         }
     }, function(error) {
         console.error("The following error occurred: " + error);
     });
 }
-*/
+
 
 //강원도청있는 곳 가데이터
 var urlpath = 'http://13.114.79.230:8080/gangwon';
@@ -65,10 +67,10 @@ function goComment(seq, regYn) {
                                       +'<input name="cmt_id" id="cmt_id" type="text" value="" placeholder="Your Name" class="form-control c-square">'
                                       +'</div>'
                                       +'<div class="form-group">'
-                                      +'<textarea name="cmt_content" id="cmt_content" rows="8" value="" class="form-control c-square"></textarea>'
+                                      +'<input name="cmt_content" id="cmt_content" value="" class="form-control c-square">'
                                       +'</div>';
                 commentListContent3 =  '<div class="form-group">' 
-                                      +'<button class="ui-btn" id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block">등록</button>'
+                                      +'<button id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block" style="text-shadow:none;">등록</button>'
                                       +'</div>';
                 commentListContent2 = commentListContent2 + commentListContent3;
                $("#commentList").append(commentListContent1);
@@ -92,10 +94,10 @@ function goComment(seq, regYn) {
                                         +'<input name="cmt_id" id="cmt_id" type="text" value="" placeholder="Your Name" class="form-control">'
                                         +'</div>'
                                         +'<div class="form-group">'
-                                        +'<textarea name="cmt_content" id="cmt_content" rows="8" value="" class="form-control"></textarea>'
+                                        +'<input name="cmt_content" id="cmt_content" value="" class="form-control c-square">'
                                         +'</div>';
                   commentListContent3 =  '<div class="form-group">' 
-                                        +'<button id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block">등록</button>'
+                                        +'<button id="cmtRegBut" onclick="goCmtRegist(\''+seq+'\')" class="btn blue uppercase btn-md sbold btn-block" style="text-shadow:none;">등록</button>'
                                         +'</div>';
                   commentListContent2 = commentListContent2 + commentListContent3;
                   console.log(commentListContent2);
@@ -122,7 +124,9 @@ function toiletInfo() {
 //공중화장실찾기 버튼 클릭시 자신위치와 화장실 정보 보여줌(가장 가까운 화장실이 정보창으로 뜸)
 $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를때 셋팅  
 
-   //   checkAvailability();
+      $('.p_wrap-loading').css('display','');
+
+      //checkAvailability();
 
       //다른 아이콘으로 표시
       if (navigator.geolocation) {
@@ -130,24 +134,25 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
         
         //ajax에서 데이터 넘겨줘야하니 무조건있어야함
         pos = {
-          lat: 37.8828686, //가데이터 강원도청 근처
-          lng: 127.7220181 //가데이터 강원도청 근처
+ //         lat: 37.8828686, //가데이터 강원도청 근처
+ //         lng: 127.7220181 //가데이터 강원도청 근처
             //***********실제 적용 데이터 lat: position.coords.latitude,
             //***********실제 적용 데이터 lng: position.coords.longitude
- //         lat: position.coords.latitude,
- //         lng: position.coords.longitude
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
         };
 
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15 , //1이면 전세계 (기존 15)
-            center: new google.maps.LatLng(37.8828686, 127.7220181),  //강원도청
-  //          center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+ //           center: new google.maps.LatLng(37.8828686, 127.7220181),  //강원도청
+            center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
             mapTypeId: 'roadmap'
         });
 
         //-- test --
           $.ajax({
-              url : urlpath +"/toilet",
+              url : urlpath +"/toilet/j",
+              //url:"http://localhost:8080/toilet/j",
               type : 'GET',
               async: true,
               cache: false,
@@ -164,19 +169,18 @@ $(document).on('pageshow', '#toilet', function (){  //뒤로가기 버튼 누를
                 $('.wrap-loading').css('display','none');
               }, 
               success : function(data){
-
-               //$('.wrap-loading').css('display','');
+               console.log("전주 : "+JSON.stringify(data))
                var contentString1 = [];
                var contentString1 = '<div id="toiletContent">현재 위치</div>'
 
                //실데이터(아래 주석풀어야)
-/*             locations = [
-                {position : new google.maps.LatLng(position.coords.latitude, position.coords.longitude), type:'myGpsLocation', content: contentString1}
-               ];*/
-
                locations = [
-                 {position : new google.maps.LatLng(37.8828686, 127.7220181), type:'myGpsLocation', content: contentString1 } //현재위치
+                {position : new google.maps.LatLng(position.coords.latitude, position.coords.longitude), type:'myGpsLocation', content: contentString1}
                ];
+
+/*               locations = [
+                 {position : new google.maps.LatLng(37.8828686, 127.7220181), type:'myGpsLocation', content: contentString1 } //현재위치
+               ];*/
 
                   for(var i=0; i<data.length; i++){
 
@@ -340,8 +344,8 @@ function goCmtRegist(seq){
            //return false;
            return goComment(seq);
       }
-      if( $('input[name=seq]').val() != "" && $('input[name=cmt_content]').val() == "" )
-      {    
+      if( $('input[name=seq]').val() != "" && $('#cmt_content').val() == "" )
+      {   
           alert( "댓글을 등록하려면 내용을 입력하세요" );
           return goComment(seq);
       }

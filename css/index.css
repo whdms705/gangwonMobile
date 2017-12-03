@@ -130,6 +130,22 @@ https://github.com/app-o-mat/jqm-cordova-template-project/LICENSE.md
   
 }
 
+.p_wrap-loading {
+  z-index:999;
+}
+
+.p_wrap-loading div{
+ position: absolute;
+ width: 500px;
+ height: 500px;
+ left: 50%;
+ top: 50%;
+ margin-left: -50px;
+ margin-top: -50px;
+ z-index:999;
+  
+}
+
 .display-none{
   display:none;
 }
@@ -241,7 +257,7 @@ html {
         width: 100% !important;
         margin-left: 0 !important;
         height:12em;
-        background:url("../img/search.png");
+        /*background:url("../img/search.png");*/
         background-repeat: no-repeat;
         background-position:center;
         background-size:20em 13em;

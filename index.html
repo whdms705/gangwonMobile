@@ -4,14 +4,13 @@
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-        <title>강원도</title>
+        <title>전주시</title>
         <link rel="stylesheet" href="lib/jquery-mobile/css/jquery.mobile-1.4.0.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile-router/js/jquery.mobile.router.min.js"></script>
         <script type="text/javascript" src="lib/jquery-mobile/js/jquery.mobile-1.4.0.min.js"></script>
- <!-- 
-        <script type="text/javascript" src="js/gpsLocation.js"></script> -->
+        
         <!--구글맵api -->
         <!--async 특성은 API가 로드되는 중에 브라우저가 나머지 페이지의 렌더링을 계속하도록 합니다. -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpF_7ajxhPQUClecnFj__WZXOx-i0Y33A"
@@ -25,8 +24,11 @@
         <script type="text/javascript" src="js/nation/nation.js"></script>
 
         <script type="text/javascript" src="js/toilet.js"></script>
-        <script type="text/javascript" src="js/parking.js"></script>
+        <script type="text/javascript" src="js/parking.js"></script> 
+        <script type="text/javascript" src="js/food.js"></script>
         <script type="text/javascript" src="js/festival.js"></script>
+        <script type="text/javascript" src="js/tourist.js"></script>
+        
 
 
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -79,165 +81,272 @@
 
     <body>
 
-                    <!--HOMEPAGE-->
-        <div data-role="page" id="home2" class="mypage">
+        
+
+        <!--korea HOMEPAGE-->
+        <div data-role="page" id="main" class="mypage">
             <div data-role="header" style="padding:.3em 0;">
-                <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><img id="icon1" src="img/icon1.png"/> 나만의 강원도</h1>
+                <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><!-- <img id="icon1" src="img/icon1.png"/> --> 나만의 전주</h1>
             </div>
             <div data-role="content" class="content" style="padding:1em 0;">
                 <div class="main_content" style="text-align:center;">
 
-                    <div class="circle-text circle-text-home" onclick="selectAnimalPage()" style="margin-bottom:5%;">
-                        <div id="searchByCategory"><a style="color:black; font-size:0.8em" class="circle-text-a">증상으로 질병 찾기 </a></div>
+                    <!-- <div class="circle-text circle-text-home"   style="margin-bottom:5%;"> 
+                        <a id="toilet" href="#toilet" onclick="toiletInfo()"> <img src="img/search.png" style="width:250px;"/> </a>
+                    </div> -->
+
+
+                    <!--  -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="row" id="">
+
+                                <div class="col-xs-6" style="padding-left: 10px;padding-right: 10px;">
+                                    <div class="color-demo tooltips">
+                                        <div style="width:100%;height:100px;margin-left:auto;margin-right:auto" >
+                                            <a href="#krService">
+                                                <img style="width:100%;height:100px; text-align: center;" src="img/nation/kr.png" align="middle" >
+                                            </a>
+                                        </div>
+                                        <div class="color-info bg-white c-font-14 sbold">KOREAN</div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" style="padding-left: 10px;padding-right: 10px;">
+                                    <div class="color-demo tooltips">
+                                        <div style="width:100%;height:100px;margin-left:auto;margin-right:auto" >
+                                            <a href="#jpService">
+                                                <img style="width:100%;height:100px; text-align: center;" src="img/nation/jp.png" align="middle" >
+                                            </a>
+                                        </div>
+                                        <div class="color-info bg-white c-font-14 sbold">Japanese</div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" style="padding-left: 10px;padding-right: 10px;">
+                                    <div class="color-demo tooltips">
+                                        <div style="width:100%;height:100px;margin-left:auto;margin-right:auto" >
+                                            <a href="#enService">
+                                                <img style="width:100%;height:100px; text-align: center;" src="img/nation/au.png" align="middle" >
+                                            </a>
+                                        </div>
+                                        <div class="color-info bg-white c-font-14 sbold">English</div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6" style="padding-left: 10px;padding-right: 10px;">
+                                    <div class="color-demo tooltips">
+                                        <div style="width:100%;height:100px;margin-left:auto;margin-right:auto" >
+                                            <a href="#caService">
+                                                <img style="width:100%;height:100px; text-align: center;" src="img/nation/ca.png" align="middle" >
+                                            </a>
+                                        </div>
+                                        <div class="color-info bg-white c-font-14 sbold">Chinese</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                               
+
+                        </div>
                     </div>
+                                 
+
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                        <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
+                        <a class="ui-btn menubarA" onclick="checkAvailability_parking()">
+                            <img src="img/parking.png" style="width:40px; height:30px;">
+                        </a>
                     </div>
+
                     <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                        <!-- GPS를 이용한 근처 공중화장실 지도 띄우기 -->
-                        <a id="toilet" href="#toilet" onclick="toiletInfo()" class="ui-btn menubarA" >공중화장실</a>
+                        <a class="ui-btn menubarA" onclick="checkAvailability_toliet()">
+                            <img src="img/toilet.png" style="width:40px; height:30px;">    
+                        </a>
+                    </div>
+
+
+                    <!-- <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a href="#festivalNation" class="ui-btn menubarA">축제</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a href="#touristNation" class="ui-btn menubarA" >인기관광지</a>
+                    </div> -->
+
+                </div>
+            </div>
+            <div data-role="footer">
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+            </div>
+            <div data-role="footer" data-position="fixed" class="footerNavi" data-tap-toggle="false">
+           
+            </div>
+        </div>
+        <!--End kr  HOMEPAGE-->
+
+        <!-- End service for kr -->
+        <div data-role="page" id="krService" class="mypage">
+            <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+            </div>
+            <div data-role="content" class="content" style="padding:1em 0;">
+                <div class="main_content" style="text-align:center;">
+
+                    <!-- <div class="circle-text circle-text-home"   style="margin-bottom:5%;"> 
+                        <a id="toilet" href="#toilet" onclick="toiletInfo()"> <img src="img/search.png" style="width:250px;"/> </a>
+                    </div> -->
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="foodInfo('kr')">먹을거리</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="festivalInfo('kr');">축제</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="touristInfo('kr');">인기관광지</a>
                     </div>
 
                 </div>
             </div>
             <div data-role="footer">
-                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 동물 질병 정보에 대한 일반인의 이해를 돕기 위한 참고자료일 뿐이며 동물의 증상과 질병에 대한 진단이나 치료의 적용을 위해서는 반드시 수의사와 상담하시기 바랍니다.</p>
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
             </div>
             <div data-role="footer" data-position="fixed" class="footerNavi" data-tap-toggle="false">
-                <nav data-role="navbar">
-                    <ul>
-                        <li> <a href="#home" class="ui-btn-active ui-state-persist navA" data-icon="home">홈</a></li>
-                        <li> <a href="missed.html" class="navA" data-icon="search">보호·분실</a></li>
-                        <li> <a href="timeLine.html" class="navA" data-icon="bullets">스토리</a></li>
-                        <li> <a href="setting.html" class="navA" data-icon="gear">더보기</a></li>
-                    </ul>
-                </nav>
+           
             </div>
         </div>
+        <!--End service for kr-->
 
 
+        <!-- End service for jp -->
+        <div data-role="page" id="jpService" class="mypage">
+            <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+            </div>
+            <div data-role="content" class="content" style="padding:1em 0;">
+                <div class="main_content" style="text-align:center;">
 
-        <!-- 메인 -->
-        <div data-role="page" id="home2" class="mypage">
-                <div data-role="header" style="padding:.3em 0;">
-                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px"><!-- <img id="icon1" src="img/icon1.png"/> --> 강원도</h1>
-                </div>
-                <div data-role="content" class="content" style="padding:1em 0;">
-                    <div class="main_content" style="text-align:center;">
-                        <div>
-                           <a id="kakao-login-btn"></a>
-                            <a href="http://developers.kakao.com/logout"></a>
-                        </div>
-                        <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                            <!-- GPS를 이용한 근처 공중화장실 지도 띄우기 -->
-                            <a id="toilet" href="#toilet" onclick="toiletInfo()" class="ui-btn menubarA" >공중화장실</a>
-                        </div>
-                        <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                            <a href="#festival" onclick="festivalInfo()" class="ui-btn menubarA">축제</a>
-                        </div>
-                        <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                            <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
-                            <a href="#parking" class="ui-btn menubarA" onclick="parkingInfo()">주차장</a>
-                        </div>
+                    <!-- <div class="circle-text circle-text-home"   style="margin-bottom:5%;"> 
+                        <a id="toilet" href="#toilet" onclick="toiletInfo()"> <img src="img/search.png" style="width:250px;"/> </a>
+                    </div> -->
 
-                        <div class="ui-content menubarDiv" style="padding-top:0.9em;">
-                            <!-- GPS를 이용한 근처 주차장 지도 띄우기 -->
-                            <a href="#home2"  class="ui-btn menubarA">국가별 테스트 이미지 </a>
-                        </div>
-
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="foodInfo('jp')">レストラン</a>
                     </div>
-                </div>            
-                <div data-role="footer">
-                    <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보의 출처는 강원도 공공데이터입니다.</p>
-                </div>
-       
-        </div>
 
-                <!-- 국가 선택 -->
-        <div data-role="page" id="home2" class="mypage">
-                <div data-role="header" style="padding:.3em 0;">
-                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">강원도</h1>
-                </div>
-                <div data-role="content" class="content" style="padding:1em 0;">
-                    <div class="main_content" style="text-align:center;">
-
-                      <!-- BEGIN CONTENT -->
-                      <div class="page-content-wrapper">
-                        <div class="page-content">
-                        <!--  -->
-                          <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="note note-info">
-                                                <h4 class="block">UI Collor Collection</h4>
-                                                <p> Just apply the color class(e.g: <code>.blue-madison</code>) to Metronic portlets, buttons, statistic blocks, tiles and other containers. </p>
-                                            </div>
-                                            <div class="row" id="">
-
-                                                <div class="col-xs-6">
-                                                    <div onclick="nationCheck(kr);" class="color-demo tooltips" data-original-title="Click to view demos for this color" >
-                                                        <div style="width:170px;height:100px;margin-left:auto;margin-right:auto" >
-                                                            <img style="width:100%;height:100px; text-align: center;" src="img/nation/kr.png" align="middle" >
-                                                        </div>
-                                                        <div class="color-info bg-white c-font-14 sbold"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <div onclick="nationCheck(jp);" class="color-demo tooltips" data-original-title="Click to view demos for this color" >
-                                                        <div style="width:170px;height:100px;margin-left:auto;margin-right:auto" >
-                                                            <img style="width:100%;height:100px; text-align: center;" src="img/nation/jp.png" align="middle" >
-                                                        </div>
-                                                        <div class="color-info bg-white c-font-14 sbold"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <div onclick="nationCheck(au);" class="color-demo tooltips" data-original-title="Click to view demos for this color" >
-                                                        <div style="width:170px;height:100px;margin-left:auto;margin-right:auto" >
-                                                            <img style="width:100%;height:100px; text-align: center;" src="img/nation/au.png" align="middle" >
-                                                        </div>
-                                                        <div class="color-info bg-white c-font-14 sbold"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
-                                                    <div onclick="nationCheck(ca);" class="color-demo tooltips" data-original-title="Click to view demos for this color" >
-                                                        <div style="width:170px;height:100px;margin-left:auto;margin-right:auto" >
-                                                            <img style="width:100%;height:100px; text-align: center;" src="img/nation/ca.png" align="middle" >
-                                                        </div>
-                                                        <div class="color-info bg-white c-font-14 sbold"></div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            
-                                               
-
-                                            </div>
-                                        </div>
-                                    </div>
-                        <!-- -->
-                      </div>
-
-
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="festivalInfo('jp');">祭り</a>
                     </div>
-                </div>            
-                <div data-role="footer">
-                    <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보의 출처는 강원도 공공데이터입니다.</p>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="touristInfo('jp');">観光地</a>
+                    </div>
+
                 </div>
-       
+            </div>
+            <div data-role="footer">
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+            </div>
+            <div data-role="footer" data-position="fixed" class="footerNavi" data-tap-toggle="false">
+           
+            </div>
         </div>
+        <!--End service for jp-->
 
 
-    <!-- 공중화장실 -->
+        <!-- End service for en -->
+        <div data-role="page" id="enService" class="mypage">
+            <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+            </div>
+            <div data-role="content" class="content" style="padding:1em 0;">
+                <div class="main_content" style="text-align:center;">
+
+                    <!-- <div class="circle-text circle-text-home"   style="margin-bottom:5%;"> 
+                        <a id="toilet" href="#toilet" onclick="toiletInfo()"> <img src="img/search.png" style="width:250px;"/> </a>
+                    </div> -->
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="foodInfo('en')">restaurant</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="festivalInfo('en');">festival</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="touristInfo('en');">Tourist destination</a>
+                    </div>
+
+                </div>
+            </div>
+            <div data-role="footer">
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+            </div>
+            <div data-role="footer" data-position="fixed" class="footerNavi" data-tap-toggle="false">
+           
+            </div>
+        </div>
+        <!--End service for en-->
+
+
+        <!-- End service for ca -->
+        <div data-role="page" id="caService" class="mypage">
+            <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+            </div>
+            <div data-role="content" class="content" style="padding:1em 0;">
+                <div class="main_content" style="text-align:center;">
+
+                    <!-- <div class="circle-text circle-text-home"   style="margin-bottom:5%;"> 
+                        <a id="toilet" href="#toilet" onclick="toiletInfo()"> <img src="img/search.png" style="width:250px;"/> </a>
+                    </div> -->
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="foodInfo('ca')">餐馆</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="festivalInfo('ca');">欢宴</a>
+                    </div>
+
+                    <div class="ui-content menubarDiv" style="padding-top:0.9em;">
+                        <a class="ui-btn menubarA" onclick="touristInfo('ca');">观光景点</a>
+                    </div>
+
+                </div>
+            </div>
+            <div data-role="footer">
+                <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+            </div>
+            <div data-role="footer" data-position="fixed" class="footerNavi" data-tap-toggle="false">
+           
+            </div>
+        </div>
+        <!--End service for ca-->
+
+
+        <!-- 공중화장실 -->
     <div data-role="page" id="toilet">
         <div data-role="header">
             <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-            <h1>주변 공중화장실 찾기</h1>
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
         </div>
         <div data-role="content" class="ui-content" style="padding:0">
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="map" style="width:100%;min-height:500px;"></div>
-                <button class="ui-btn" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;">가장 가까운 화장실 찾기</button>
+                <button class="btn blue uppercase btn-md sbold btn-block" id="nearToilet" onclick="nearToiletSearch()" style="height:30px;    text-shadow:none;">가장 가까운 화장실 찾기</button>
             </div>
         </div>
         <!-- start 로딩 이미지   -->
@@ -250,8 +359,8 @@
     <div data-role="page" id="commentWrt">
         <div data-role="header">
             <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-            <h1>댓글</h1>
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
         </div>
         <div data-ajax="false" data-role="content" id="cmtContent" class="ui-content" style="padding:0">
             <div class="page-content-wrapper">
@@ -287,19 +396,6 @@
             </div>
             </div>
 
-
-
-
-
-<!--             <form id="commentForm" action="#" method="post" >    
-                <div id="commentList">
-
-                </div>
-                <div id="commentRegist" >
-                
-                </div>  
-                <input name="seq" id="seq" type="hidden" value="">
-            </form>   -->
         </div>
     </div>
 
@@ -307,175 +403,454 @@
     <div data-role="page" id="parking">
         <div data-role="header">
             <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-            <h1>주변 주차장 찾기</h1>
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
         </div>
-        <div data-role="content" class="ui-content" style="padding:0">
-            <!-- start 로딩 이미지   -->
-             <div class="p_wrap-loading" style="">
-                <div id="pLoading"> <img src="img/loader.gif"/></div>
-            </div>
-            <!-- end 로딩 이미지   -->   
+        <div data-role="content" class="ui-content" style="padding:0"> 
             <div class="map_wrap">
                 <!-- 지도를 표시할 div 입니다 -->
                 <div id="parkingmap" style="width:100%;min-height:500px;"></div>
-                <button class="ui-btn" id="nearToilet" onclick="nearParkingSearch()" style="height:30px;">가장 가까운 주차장 찾기</button>
+                <button class="btn blue uppercase btn-md sbold btn-block" id="nearToilet" onclick="nearParkingSearch()" style="height:30px;     text-shadow:none;">가장 가까운 주차장 찾기</button>
             </div>
-        </div>     
+        </div>
+        <!-- start 로딩 이미지   -->
+         <div class="p_wrap-loading" >
+            <div id="pLoading"> <img src="img/loader.gif"/></div>
+        </div>
+        <!-- end 로딩 이미지   -->               
     </div>
 
     <div data-role="page" id="parkingCommentWrt">
         <div data-role="header">
             <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-            <h1>댓글</h1>
-            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
         </div>
-        <div data-role="content" id="parkingCmtContent" class="ui-content" style="padding:0">
-            <form id="parkingCommentForm" action="#" method="post" >    
-                <div id="parkingCommentList">
+        
+        <!--주차장 댓글ui추가 -->
+        <div data-ajax="false" data-role="content" id="parkingCmtContent" class="ui-content" style="padding:0">
+            <div class="page-content-wrapper">
+            <div class="page-content">
+                <div class="blog-page blog-content-2">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="blog-single-content bordered blog-container">
 
-                </div>
-                <div id="parkingCommentRegist" >
-                
-                </div>  
-                <input name="seq" id="seq" type="hidden" value="">
-            </form>  
-        </div>
-    </div>
-
-        <!-- start of festival page -->
-        <div data-role="page" id="festival">
-            <div data-role="header">
-                
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-                <h1>강원도 축제</h1>
-            </div>
-            <div data-role="content" class="ui-content" style="padding:0">
+                             
+                                <div class="blog-comments">
+                                    <h3 id="parkingcommentCount" class="sbold blog-comments-title"></h3>
+                                    <form id="parkingCommentForm" action="#" method="post" >
+                                        <div class="c-comment-list">
+                                            <div id="parkingCommentList">
 
 
-              <!-- BEGIN CONTENT -->
-              <div class="page-content-wrapper">
-                <div class="page-content">
-                <!--  -->
-                  <div class="row">
-                                <div class="col-md-12">
-                                    <div class="note note-info">
-                                        <h4 class="block">UI Collor Collection</h4>
-                                        <p> Just apply the color class(e.g: <code>.blue-madison</code>) to Metronic portlets, buttons, statistic blocks, tiles and other containers. </p>
-                                    </div>
-                                    <div class="row" id="festival_content">
-                                        
 
-
-                                    </div>
-                                    
-                                       
-
-                                    </div>
-                                </div>
-                            </div>
-                <!-- -->
-              </div>
-            </div>
-            </div>
-            <!--<div data-role="footer">
-                    <h1>Insert Footer Text Here</h1>
-                </div>-->
-        </div>
-        <!-- end of festival page -->
-
-            <!-- start of festivalDetail page -->
-        <div data-role="page" id="festivalDetail">
-            <div data-role="header">
-                
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-                <h1>강원도 축제 상세정보</h1>
-            </div>
-            <div data-role="content" class="ui-content" style="padding:0">
-
-
-              <!-- BEGIN CONTENT -->
-              <div class="page-content-wrapper">
-                <div class="page-content">
-                <!--  -->
-                <!-- BEGIN THUMBNAILS PORTLET-->
-                    <div class="portlet light bordered">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                <i class="icon-share font-green-sharp"></i>
-                                <span class="caption-subject font-green-sharp bold uppercase">Thumbnails</span>
-                            </div>
-                            <div class="actions">
-                                <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                    <i class="icon-cloud-upload"></i>
-                                </a>
-                                <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                    <i class="icon-wrench"></i>
-                                </a>
-                                <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                    <i class="icon-trash"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            
-                            
-                            <h4><p class="block" id="festival_title"></p></h4>
-                            <div class="note note-info">
-                                <p id="festival_summary"> </p>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="thumbnail">
-                                        <img  id="festival_image" alt="" style="width: 100%; height: 200px;">
-                                        <div class="caption">
-                                            <div id="festival_info">
-                                                
                                             </div>
-                                            <p>
-                                                <a href="#festivalMap" onclick="festivalMapSeq()" class="btn blue"> 지도보기 </a>
-                                                <a href="javascript:;" class="btn default"> 돌아가기 </a>
-                                            </p>
                                         </div>
-                                    </div>
+                                    <h3 class="sbold blog-comments-title">Leave A Comment</h3>
+                                        <div id="parkingCommentRegist">
+                                        
+                                        </div>
+                                        <input name="seq" id="seq" type="hidden" value="">
+                                    </form>
                                 </div>
-
+                               
                             </div>
                         </div>
                     </div>
-                <!-- END THUMBNAILS PORTLET-->
-
-                <!-- -->
                 </div>
-              </div>
             </div>
-            <!--<div data-role="footer">
-                    <h1>Insert Footer Text Here</h1>
-                </div>-->
+            </div>
         </div>
-        <!-- end of festivalDetail page -->
+        <!--주차장 댓글ui추가 -->
+    </div>
 
-        <!-- 축제지도 -->
-        <div data-role="page" id="festivalMap">
-            <div data-role="header">
+
+    <!-- start of food page -->
+    <div data-role="page" id="food">
+        <div data-role="header" style="padding:.3em 0;">
                 <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
-                <h1>축제 위치</h1>
-                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#home" class="hicon">Home</a>
-            </div>
-            <div data-role="content" class="ui-content" style="padding:0">
-                <div class="map_wrap">
-                    <!-- 지도를 표시할 div 입니다 -->
-                    <div id="fmap" style="width:100%;min-height:500px;"></div>        
-                </div>
-            </div>
-            <!-- start 로딩 이미지   -->
-            <!-- <div class="wrap-loading" style="">
-                <div id="fLoading"> <img src="img/loader.gif" /></div>
-            </div> -->
-            <!-- end 로딩 이미지   -->
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
         </div>
-        <!-- 축제지도 -->
+        
+        <div data-role="content" class="ui-content" style="padding:0">
 
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+              <div class="row">
+                            <div class="col-md-12">
+                                
+                                <div class="row" id="food_content">
+                                    
+
+
+                                </div>
+                                
+                                <div id="food_more">
+                                
+                                </div>
+
+                                </div>
+                            </div>
+                        </div>
+            <!-- -->
+          </div>
+        </div>
+        </div>
+        <div data-role="footer">
+            <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+        </div>
+    </div>
+    <!-- end of food page -->
+
+    <!-- start of foodDetail page -->
+    <div data-role="page" id="foodDetail">
+        <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+            <!-- BEGIN THUMBNAILS PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-green-sharp"></i>
+                            <span class="caption-subject font-green-sharp bold uppercase">먹을거리 정보</span>
+                        </div>
+                        <div class="actions">
+                         
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        
+                        
+                        <h4><p class="block" id="food_title"></p></h4>
+                        <div class="note note-info">
+                            <p id="food_summary"> </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="thumbnail">
+                                    <img  id="food_image" alt="" style="width: 100%; height: 200px;">
+                                    <div class="caption">
+                                        <div id="food_info">
+                                            
+                                        </div>
+                                        <p>
+                                             <a href="#foodMap" onclick="foodMapSeq()" class="btn blue"> 지도보기 </a>
+                                            
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- END THUMBNAILS PORTLET-->
+
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <div data-role="footer">
+            <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+        </div>
+    </div>
+    <!-- end of foodDetail page -->
+
+    <!-- start of foodMap page -->
+    <div data-role="page" id="foodMap">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+            <div class="map_wrap">
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="fdmap" style="width:100%;min-height:500px;"></div>        
+            </div>
+        </div>
+        <!-- start 로딩 이미지   -->
+        <!-- <div class="wrap-loading" style="">
+            <div id="fLoading"> <img src="img/loader.gif" /></div>
+        </div> -->
+        <!-- end 로딩 이미지   -->
+    </div>
+    <!-- end of foodMap page -->
+
+
+    <!-- start of festival page -->
+    <div data-role="page" id="festival">
+        <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+              <div class="row">
+                            <div class="col-md-12">
+                                
+                                <div class="row" id="festival_content">
+                                    
+
+
+                                </div>
+                                
+                                <div id="festival_more">
+                                
+                                </div>
+
+                                </div>
+                            </div>
+                        </div>
+            <!-- -->
+          </div>
+        </div>
+        </div>
+        <div data-role="footer">
+            <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+        </div>
+    </div>
+    <!-- end of festival page -->
+
+    <!-- start of festivalDetail page -->
+    <div data-role="page" id="festivalDetail">
+        <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+            <!-- BEGIN THUMBNAILS PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-green-sharp"></i>
+                            <span class="caption-subject font-green-sharp bold uppercase">축제 정보</span>
+                        </div>
+                        <div class="actions">
+                         
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        
+                        
+                        <h4><p class="block" id="festival_title"></p></h4>
+                        <div class="note note-info">
+                            <p id="festival_summary"> </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="thumbnail">
+                                    <img  id="festival_image" alt="" style="width: 100%; height: 200px;">
+                                    <div class="caption">
+                                        <div id="festival_info">
+                                            
+                                        </div>
+                                        <p>
+                                             <a href="#festivalMap" onclick="festivalMapSeq()" class="btn blue"> 지도보기 </a>
+                                            
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- END THUMBNAILS PORTLET-->
+
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <div data-role="footer">
+            <p style="font-size:0.8em;padding-left: 3%;padding-right: 3%;">&nbsp;본 정보는 전주 공공데이터와 공공데이터포털의 정보를 기반으로 서비스 제공 중입니다.</p>
+        </div>
+    </div>
+    <!-- end of festivalDetail page -->
+
+
+    <!-- 축제지도 -->
+    <div data-role="page" id="festivalMap">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+            <div class="map_wrap">
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="fmap" style="width:100%;min-height:500px;"></div>        
+            </div>
+        </div>
+        <!-- start 로딩 이미지   -->
+        <!-- <div class="wrap-loading" style="">
+            <div id="fLoading"> <img src="img/loader.gif" /></div>
+        </div> -->
+        <!-- end 로딩 이미지   -->
+    </div>
+    <!-- 축제지도 -->
+
+
+
+    <!-- start of tourist page -->
+    <div data-role="page" id="tourist">
+        <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+              <div class="row">
+                            <div class="col-md-12">
+                               
+                                <div class="row" id="tourist_content">
+                                    
+
+
+                                </div>
+                                
+                                <div id="tourist_more">
+                                
+                                </div>
+                                
+
+                                </div>
+                            </div>
+                        </div>
+            <!-- -->
+          </div>
+        </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of tourist page -->
+
+
+    <!-- start of touristDetail page -->
+    <div data-role="page" id="touristDetail">
+        <div data-role="header" style="padding:.3em 0;">
+                <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+                    <h1 style="font-size:1.2em; margin:0 15%; padding:.2em 0; letter-spacing:1px">나만의 전주</h1>
+                <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+
+
+          <!-- BEGIN CONTENT -->
+          <div class="page-content-wrapper">
+            <div class="page-content">
+            <!--  -->
+            <!-- BEGIN THUMBNAILS PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-share font-green-sharp"></i>
+                            <span class="caption-subject font-green-sharp bold uppercase">관광지 정보</span>
+                        </div>
+                        <div class="actions">
+                          
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        
+                        
+                        <h4><p class="block" id="tourist_title"></p></h4>
+                        <div class="note note-info">
+                            <p id="tourist_summary"> </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="thumbnail">
+                                    <img  id="tourist_image" alt="" style="width: 100%; height: 200px;">
+                                    <div class="caption">
+                                        <div id="tourist_info">
+                                            
+                                        </div>
+                                        <p>
+                                            <a href="#touristMap" onclick="touristMapSeq()" class="btn blue"> 지도보기 </a>
+                                            
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- END THUMBNAILS PORTLET-->
+
+            <!-- -->
+            </div>
+          </div>
+        </div>
+        <!--<div data-role="footer">
+                <h1>Insert Footer Text Here</h1>
+            </div>-->
+    </div>
+    <!-- end of tourist page -->
+
+
+    <!-- 관광지도 -->
+    <div data-role="page" id="touristMap">
+        <div data-role="header">
+            <a data-iconpos="notext" data-role="button" data-rel="back" data-icon="arrow-l" class="hicon">Back</a>
+            <h1>나만의 전주</h1>
+            <a data-iconpos="notext" data-role="button" data-icon="home" title="Home" href="#main" class="hicon">Home</a>
+        </div>
+        <div data-role="content" class="ui-content" style="padding:0">
+            <div class="map_wrap">
+                <!-- 지도를 표시할 div 입니다 -->
+                <div id="tourmap" style="width:100%;min-height:500px;"></div>        
+            </div>
+        </div>
+        <!-- start 로딩 이미지   -->
+        <!-- <div class="wrap-loading" style="">
+            <div id="fLoading"> <img src="img/loader.gif" /></div>
+        </div> -->
+        <!-- end 로딩 이미지   -->
+    </div>
+    <!-- 축제지도 -->
+
+
+
+
+    <!--  정리중   --> 
 
     </body>
 </html>
